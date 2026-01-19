@@ -4,7 +4,7 @@
     "connectionName" : "myoltp",
     "version" : "25.3.2.0"
   },
-  "schemas" : [ "CICD" ],
+  "schemas" : [ "DEMO1" ],
   "lastReleaseVersion" : "",
   "export" : {
     "format" : {

@@ -2,7 +2,7 @@
   "project" : "demo",
   "sqlcl" : {
     "connectionName" : "myoltp",
-    "version" : "25.3.2.0"
+    "version" : "25.4.1.0"
   },
   "schemas" : [ "DEMO1" ],
   "lastReleaseVersion" : "1.2",

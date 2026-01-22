@@ -5,6 +5,6 @@
 
 
 begin
-insert into demo1.dept values(100, 'TRAINING', 'NEW YORK');
+insert into demo1.dept values(75, 'TRAINING', 'NEW YORK');
 commit;
 end;

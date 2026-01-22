@@ -1,0 +1,21 @@
+---
+- # ====== List of Values: DEPT.DNAME ==========================
+  id: 9478407697482935
+  identification: 
+    name: DEPT.DNAME
+
+  subscription: 
+    version-number: 46142712656215
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: DEPT
+
+  column-mapping: 
+    return: DEPTNO
+    display: DNAME
+    default-sort: DNAME
+    sort-direction: Ascending (Nulls Last)
+

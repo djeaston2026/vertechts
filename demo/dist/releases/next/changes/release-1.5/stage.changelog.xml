@@ -3,6 +3,6 @@
                    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
-<!--CHANGES-->
-<include file="changes/release-1.5/stage.changelog.xml" relativeToChangelogFile="true"/>
+<include file="demo1/tables/emp2.sql" relativeToChangelogFile="true"/>
+<include file="demo1/functions/check_user.sql" relativeToChangelogFile="true"/>
 </databaseChangeLog>

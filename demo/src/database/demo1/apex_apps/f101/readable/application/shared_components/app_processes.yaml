@@ -1,0 +1,75 @@
+---
+- # ====== Application Process: POPULATE_SHUTTLE ===============
+  id: 10853975839850977
+  identification: 
+    name: POPULATE_SHUTTLE
+    type: NATIVE_PLSQL
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |
+      declare
+          l_selected long := wwv_flow.g_x01;
+          l_search long:= wwv_flow.g_x02;
+          l_filter_item long:= wwv_flow.g_x03;
+      
+      begin
+      htp.prn('[');
+      for c in (select  OOW_DEMO_ITEMS.ITEM_NAME as ITEM_NAME,
+                          rawtohex(OOW_DEMO_ITEMS.ID)  as ID
+       from OOW_DEMO_ITEMS where id=1)
+      loop
+      htp.prn('{ id: '||c.id||', data: "'||c.item_name||'"}');
+      end loop;
+      htp.prn(']');
+      
+      end;
+
+  execution: 
+    sequence: 1
+    point: Ajax Callback
+
+  security: 
+    authorization-scheme: MODEL.LOV.MUST_NOT_BE_PUBLIC_USER
+
+  subscription: 
+    version-number: 46196298690928
+
+- # ====== Application Process: GET_SHUTTLE_VALUES =============
+  id: 11049016328333609
+  identification: 
+    name: GET_SHUTTLE_VALUES
+    type: NATIVE_PLSQL
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |
+      declare
+          l_filter varchar2(4000) := upper(apex_application.g_x01);
+      begin
+          for r in (
+              select rawtohex(id) as id, item_name as name
+              from oow_demo_items
+              where l_filter is null
+              or upper(item_name) like '%'||l_filter||'%'
+              order by item_name
+          ) loop
+              apex_json.open_object;
+              apex_json.write('value',r.id);
+              apex_json.write('label',r.name);
+              apex_json.close_object;
+          end loop;
+      end;
+
+  execution: 
+    sequence: 1
+    point: Ajax Callback
+
+  security: 
+    authorization-scheme: MODEL.LOV.MUST_NOT_BE_PUBLIC_USER
+
+  subscription: 
+    version-number: 46196297754282
+

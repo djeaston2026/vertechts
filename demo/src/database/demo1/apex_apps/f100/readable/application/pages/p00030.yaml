@@ -1,0 +1,407 @@
+---
+# ====== Page: Transaction ===================================
+id: 30
+identification: 
+  name: Transaction
+  title: Transaction
+
+appearance: 
+  page-mode: Normal
+  page-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: false
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Unrestricted
+  form-auto-complete: On
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Always
+
+server-cache: 
+  caching: Disabled
+
+help: 
+  help-text: <p>Loading the page will cause a transaction to be completed.  Reload the page to generate another transaction.  Pressing the button will not post the page simply reload the page.</p>
+
+regions: 
+- # ====== Region: breadcrumb ==================================
+  id: 38767849823357795058
+  identification: 
+    name: breadcrumb
+    type: Breadcrumb
+
+  source: 
+    breadcrumb: ' Breadcrumb' # 44377004153871086216
+
+  layout: 
+    sequence: 30
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Title Bar
+    template-options: 
+    - '#DEFAULT#'
+    - t-BreadcrumbRegion--useBreadcrumbTitle
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      breadcrumb-template: Breadcrumb
+      template-options: 
+      - '#DEFAULT#'
+
+- # ====== Region: Generate One Transaction on Page Load =======
+  id: 38767850625259806319
+  identification: 
+    name: Generate One Transaction on Page Load
+    type: Static Content
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--hideHeader js-addHiddenHeadingRoleDesc
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: show last generation ========================
+  id: 38767851003349806320
+  identification: 
+    name: show last generation
+    type: PL/SQL Dynamic Content [Legacy]
+
+  source: 
+    pl/sql-code: |
+      declare
+          x number;
+      begin
+         begin
+             x := oow_demo_gen_data_pkg.generate_transaction;
+             sys.htp.p('<br><strong>Transaction</strong> "'||x||'" completed');
+         exception when others then
+             sys.htp.p('<br>unexpected error: '||sqlerrm);
+         end;
+      
+         for c1 in (select id,
+                           store_id, 
+                           created_on,
+                           product_id, 
+                           quantity, 
+                           item_price,
+                           date_of_sale,
+                           (select store_name 
+                            from OOW_demo_stores s 
+                            where s.id = h.store_id) store,
+                           (select item_Name from OOW_demo_items i
+                            where i.id = h.product_id) product,
+                           SALES_DATA 
+                    from oow_demo_sales_history h
+                    where id = x) loop
+           sys.htp.p('<br /><strong>ID</strong>: '||apex_escape.html(c1.id));
+           sys.htp.p('<br /><strong>Store</strong>: '||apex_escape.html(c1.store));
+           sys.htp.p('<br /><strong>Product</strong>: '||apex_escape.html(c1.product));
+           sys.htp.p('<br /><strong>Date of Sale</strong>: '||to_char(c1.date_of_sale,'DD-MON-YYYY HH24:MI:SS'));
+           sys.htp.p('<br /><strong>Date of Posting</strong>: '||to_char(c1.created_on,'DD-MON-YYYY HH24:MI:SS'));
+      
+           sys.htp.p('<br /><strong>Quantity</strong>: '||to_char(c1.quantity,'999G999G999G990'));
+           sys.htp.p('<br /><strong>Price</strong>: '||to_char(c1.item_price,'$999G999G999G990D00'));
+           sys.htp.p('<br /><strong>Sale</strong>: '||to_char(c1.item_price * c1.quantity,'$999G999G999G990D00'));
+         end loop;
+      
+      exception when others then
+        sys.htp.prn(sqlerrm);
+      end;
+
+  layout: 
+    sequence: 20
+    parent-region: Generate One Transaction on Page Load # 38767850625259806319
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: None
+    render-components: Above Content
+
+  advanced: 
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+page-items: 
+- # ====== Page Item: P30_TRANSACTION_ID =======================
+  id: 38767850826025806320
+  identification: 
+    name: P30_TRANSACTION_ID
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 10
+    region: Generate One Transaction on Page Load # 38767850625259806319
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P30_AUTOREFRESH ==========================
+  id: 38767958501101848230
+  identification: 
+    name: P30_AUTOREFRESH
+    type: Radio Group
+
+  label: 
+    label: Auto-Refresh
+    alignment: Left
+
+  settings: 
+    number-of-columns: 5
+    page-action-on-selection: None
+
+  layout: 
+    sequence: 20
+    region: Generate One Transaction on Page Load # 38767850625259806319
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    - t-Form-fieldContainer--stretchInputs
+    - t-Form-fieldContainer--radioButtonGroup
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: AUTO REFRESH # 38767959528768903500
+    display-extra-values: true
+    display-null-value: false
+
+  advanced: 
+    css-classes: 
+    - mnw180
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    escape-special-characters: true
+    restricted-characters: All characters can be saved.
+
+buttons: 
+- # ====== Button: refresh_page ================================
+  id: 38767852417387825480
+  identification: 
+    button-name: refresh_page
+    label: Refresh Page
+
+  layout: 
+    sequence: 20
+    region: breadcrumb # 38767849823357795058
+    slot: NEXT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--noUI
+    - t-Button--iconLeft
+    icon: fa-undo
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:30:&SESSION.::&DEBUG.:::'
+      page: 30 # Transaction
+
+    warn-on-unsaved-changes: Do Not Check
+
+- # ====== Button: up ==========================================
+  id: 39017500262070688989
+  identification: 
+    button-name: up
+    label: Up
+
+  layout: 
+    sequence: 10
+    region: breadcrumb # 38767849823357795058
+    slot: UP
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--noUI
+    icon: fa-arrow-up
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:28:&SESSION.::&DEBUG.:::'
+      page: 28 # Generate Transactions
+
+    warn-on-unsaved-changes: Do Not Check
+
+dynamic-actions: 
+- # ====== Dynamic Action: Set Auto-Refresh ====================
+  id: 38767958628460856101
+  identification: 
+    name: Set Auto-Refresh
+
+  execution: 
+    sequence: 10
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P30_AUTOREFRESH
+
+  client-side-condition: 
+    type: Item is not null
+    item: P30_AUTOREFRESH
+
+  actions: 
+  - # ====== Action: Execute JavaScript Code =====================
+    id: 38767958904047856102
+    identification: 
+      action: Execute JavaScript Code
+
+    settings: 
+      code: setTimeout("location.reload(true);",1000 * $v('P30_AUTOREFRESH'));
+
+    execution: 
+      sequence: 10
+      event: Set Auto-Refresh # 38767958628460856101
+      fire-when-event-result-is: True
+      fire-on-initialization: true
+
+  - # ====== Action: Execute Server-side Code ====================
+    id: 38767959114392861519
+    identification: 
+      action: Execute Server-side Code
+
+    settings: 
+      language: PE.PROPERTY.SOURCE_SNIPPET_LANG.LOV.PLSQL.D
+      pl/sql-code: null;
+      items-to-submit: 
+      - P30_AUTOREFRESH
+
+    execution: 
+      sequence: 5
+      event: Set Auto-Refresh # 38767958628460856101
+      fire-when-event-result-is: True
+      fire-on-initialization: true
+      stop-execution-on-error: true
+      wait-for-result: true
+

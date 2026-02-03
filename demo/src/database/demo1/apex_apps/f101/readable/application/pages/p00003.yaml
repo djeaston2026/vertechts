@@ -1,0 +1,271 @@
+---
+# ====== Page: page3 =========================================
+id: 3
+identification: 
+  name: page3
+  alias: PAGE3
+  title: page3
+
+appearance: 
+  page-mode: Normal
+  page-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: true
+
+javascript: 
+  function-and-global-variable-declaration: |
+    function filterShuttle(filterValue, shuttleId) {
+        // APEX appends "_LEFT" to the ID of the 'Available' side of the shuttle
+        var leftSide = $('#' + shuttleId + '_LEFT');
+        var filter = filterValue.toLowerCase();
+    
+        // Loop through each option in the left side
+        leftSide.find('option').each(function() {
+            var option = $(this);
+            var text = option.text().toLowerCase();
+    
+            // If the text matches the filter, show it; otherwise, hide it
+            if (text.indexOf(filter) > -1) {
+                option.show();
+            } else {
+                option.hide();
+            }
+        })}
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Arguments Must Have Checksum
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Only for Success
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: New =========================================
+  id: 21701799162274522
+  identification: 
+    name: New
+    type: Static Content
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+page-items: 
+- # ====== Page Item: SHUT2 ====================================
+  id: 21702831577274547
+  identification: 
+    name: SHUT2
+    type: Shuttle
+
+  label: 
+    label: Shut2
+    alignment: Left
+
+  settings: 
+    show-controls: All
+
+  multiple-values: 
+    type: Delimited List
+    separator: ':'
+
+  layout: 
+    sequence: 20
+    region: New # 21701799162274522
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    height: 5
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: SQL Query
+    sql-query: |
+      select  OOW_DEMO_ITEMS.ITEM_NAME as display_value,
+          OOW_DEMO_ITEMS.ID  as return_value 
+       from OOW_DEMO_ITEMS OOW_DEMO_ITEMS
+       WHERE (
+              -- 1. Show items matching the search box
+              UPPER(OOW_DEMO_ITEMS.ITEM_NAME) LIKE '%' || UPPER(:SEARCH1) || '%' 
+              OR :SEARCH1 IS NULL
+             )
+          OR (
+              -- 2. Keep items visible if they are already selected (on the right side)
+              instr(':' || :SHUT2 || ':', ':' || OOW_DEMO_ITEMS.ID || ':') > 0
+             )
+       ORDER BY 1 ASC
+    display-extra-values: false
+
+  cascading-list-of-values: 
+    parent-item(s): 
+    - SEARCH1
+    items-to-submit: 
+    - SEARCH1
+    - SHUT2
+    parent-required: true
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: SEARCH1 ==================================
+  id: 21702950581274548
+  identification: 
+    name: SEARCH1
+    type: Text Field
+
+  label: 
+    label: Search1
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: Leading and Trailing
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 10
+    region: New # 21701799162274522
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+dynamic-actions: 
+- # ====== Dynamic Action: New =================================
+  id: 10858030738609673
+  identification: 
+    name: New
+
+  execution: 
+    sequence: 10
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Key Release
+    selection-type: Item(s)
+    item(s): 
+    - SEARCH1
+
+  actions: 
+  - # ====== Action: Refresh =====================================
+    id: 10858556157609676
+    identification: 
+      action: Refresh
+
+    settings: 
+      maintain-pagination: false
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - SHUT2
+
+    execution: 
+      sequence: 10
+      event: New # 10858030738609673
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+

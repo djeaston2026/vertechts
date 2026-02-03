@@ -1,0 +1,26 @@
+---
+- # ====== Page Group: Stores ==================================
+  id: 39732638949839161918
+  identification: 
+    name: Stores
+
+- # ====== Page Group: Reporting ===============================
+  id: 39732641972777162923
+  identification: 
+    name: Reporting
+
+- # ====== Page Group: Administration ==========================
+  id: 39732684641170164233
+  identification: 
+    name: Administration
+
+- # ====== Page Group: Regions =================================
+  id: 39732783594591551637
+  identification: 
+    name: Regions
+
+- # ====== Page Group: Data Generation =========================
+  id: 39733836873305588634
+  identification: 
+    name: Data Generation
+

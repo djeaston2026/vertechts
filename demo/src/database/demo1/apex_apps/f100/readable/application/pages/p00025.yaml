@@ -1,0 +1,680 @@
+---
+# ====== Page: Sales by Product and Store by Week ============
+id: 25
+identification: 
+  name: Sales by Product and Store by Week
+  title: Sales by Product and Store by Week
+  page-group: Reporting # 39732641972777162923
+
+appearance: 
+  page-mode: Normal
+  page-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: false
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Unrestricted
+  form-auto-complete: On
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Always
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: Sales by Product Region by Week =============
+  id: 38767801602171453646
+  identification: 
+    name: Sales by Product Region by Week
+    type: Interactive Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select 
+          product_id,
+          (select item_name from oow_demo_items i where i.id = x.product_id) product,
+          yyyy_ww yyyy_w,
+          sum(decode(x.region_id,1,units_sold,0)) r1_units,
+          sum(decode(x.region_id,2,units_sold,0)) r2_units,
+          sum(decode(x.region_id,3,units_sold,0)) r3_units,
+          sum(decode(x.region_id,1,total_sale,0)) r1_total_sale,
+          sum(decode(x.region_id,2,total_sale,0)) r2_total_sale,
+          sum(decode(x.region_id,3,total_sale,0)) r3_total_sale
+      from
+      (
+      select (select region_id 
+              from OOW_DEMO_STORES s 
+              where s.id = sh.store_id) region_id, 
+             sh.product_id,
+             to_char(sh.date_of_sale, 'YYYY.WW') yyyy_ww,
+             sum(sh.item_price * sh.QUANTITY) total_sale,
+             sum(sh.quantity) units_sold
+      from     OOW_DEMO_SALES_HISTORY sh
+      group by sh.product_id, 
+               sh.store_id, 
+               to_char(sh.date_of_sale, 'YYYY.WW')
+      ) x
+      group by product_id, yyyy_ww
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Interactive Report
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    id: 38767801819972453647
+    link: 
+      link-column: Exclude Link Column
+
+    appearance: 
+      show-null-values-as: '-'
+
+    pagination: 
+      type: Row Ranges X to Y
+      display-position: Bottom - Right
+
+    performance: 
+      lazy-loading: false
+      maximum-rows-to-process: 100000
+
+    messages: 
+      when-no-data-found: No data found.
+      when-more-data-found: 'This query returns more than #MAX_ROW_COUNT# rows, please filter your data to ensure complete results.'
+
+    search-bar: 
+      include-search-bar: true
+      search-field: true
+      finder-drop-down: true
+      reports-select-list: true
+      rows-per-page-selector: false
+
+    actions-menu: 
+      include-actions-menu: true
+      filter: true
+      select-columns: true
+      rows-per-page: true
+      sort: true
+      control-break: true
+      highlight: true
+      compute: true
+      aggregate: true
+      chart: true
+      group-by: true
+      pivot: true
+      flashback: true
+      save-report: true
+      save-public-report: true
+      reset: true
+      help: true
+      download: true
+      subscription: true
+
+    download: 
+      formats: 
+      - CSV
+      - HTML
+      send-as-email: true
+
+    heading: 
+      fixed-to: Page
+
+    icon-view: 
+      show: false
+
+    detail-view: 
+      show: false
+
+    saved-reports: 
+    - # ====== Saved Report: Primary Report ========================
+      id: 38767802624994453650
+      identification: 
+        name: Primary Report
+        alias: 27273447
+
+    columns: 
+    - # ====== Column: YYYY_W ======================================
+      id: 38767801900120453649
+      identification: 
+        column-name: YYYY_W
+        type: Plain Text
+
+      heading: 
+        heading: Week
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 3
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: R1_UNITS ====================================
+      id: 38767802006113453649
+      identification: 
+        column-name: R1_UNITS
+        type: Plain Text
+
+      heading: 
+        heading: '&R1. Units'
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 4
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      appearance: 
+        format-mask: 999G999G999G999G999G990
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: R2_UNITS ====================================
+      id: 38767802101274453649
+      identification: 
+        column-name: R2_UNITS
+        type: Plain Text
+
+      heading: 
+        heading: '&R2. Units'
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 5
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      appearance: 
+        format-mask: 999G999G999G999G999G990
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: R1_TOTAL_SALE ===============================
+      id: 38767802205563453649
+      identification: 
+        column-name: R1_TOTAL_SALE
+        type: Plain Text
+
+      heading: 
+        heading: '&R1. Total Sale'
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 8
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      appearance: 
+        format-mask: $999G999G999G999G999G990
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: R2_TOTAL_SALE ===============================
+      id: 38767802310649453649
+      identification: 
+        column-name: R2_TOTAL_SALE
+        type: Plain Text
+
+      heading: 
+        heading: '&R2. Total Sale'
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 9
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      appearance: 
+        format-mask: $999G999G999G999G999G990
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: R3_UNITS ====================================
+      id: 38767802422588453649
+      identification: 
+        column-name: R3_UNITS
+        type: Plain Text
+
+      heading: 
+        heading: '&R3. Units'
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 10
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      appearance: 
+        format-mask: 999G999G999G999G999G990
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: R3_TOTAL_SALE ===============================
+      id: 38767802524398453649
+      identification: 
+        column-name: R3_TOTAL_SALE
+        type: Plain Text
+
+      heading: 
+        heading: '&R3. Total Sale'
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 11
+        column-alignment: end
+
+      accessibility: 
+        value-identifies-row: false
+
+      appearance: 
+        format-mask: $999G999G999G999G999G990
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+    - # ====== Column: PRODUCT_ID ==================================
+      id: 38767818929877514837
+      identification: 
+        column-name: PRODUCT_ID
+        type: Hidden
+
+      heading: 
+        heading: Product ID
+
+      layout: 
+        sequence: 12
+
+      source: 
+        primary-key: false
+
+      security: 
+        escape-special-characters: false
+
+    - # ====== Column: PRODUCT =====================================
+      id: 38767819202435525857
+      identification: 
+        column-name: PRODUCT
+        type: Plain Text
+
+      heading: 
+        heading: Product
+        alignment: center
+
+      single-row-view: 
+        use-column-heading: true
+
+      layout: 
+        sequence: 14
+        column-alignment: start
+
+      accessibility: 
+        value-identifies-row: false
+
+      source: 
+        primary-key: false
+
+      column-filter: 
+        type: Default Based on Column Type
+
+      enable-users-to: 
+        hide: true
+        sort: true
+        filter: true
+        highlight: true
+        control-break: true
+        aggregate: true
+        compute: true
+        chart: true
+        group-by: true
+        pivot: true
+
+      security: 
+        escape-special-characters: true
+
+- # ====== Region: breadcrumb ==================================
+  id: 38767803014184453652
+  identification: 
+    name: breadcrumb
+    type: Breadcrumb
+
+  source: 
+    breadcrumb: ' Breadcrumb' # 44377004153871086216
+
+  layout: 
+    sequence: 1
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Title Bar
+    template-options: 
+    - '#DEFAULT#'
+    - t-BreadcrumbRegion--useBreadcrumbTitle
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      breadcrumb-template: Breadcrumb
+      template-options: 
+      - '#DEFAULT#'
+
+buttons: 
+- # ====== Button: RESET_REPORT ================================
+  id: 38767802826610453651
+  identification: 
+    button-name: RESET_REPORT
+    label: Reset
+
+  layout: 
+    sequence: 10
+    region: Sales by Product Region by Week # 38767801602171453646
+    slot: RIGHT_OF_IR_SEARCH_BAR
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--iconLeft
+    icon: fa-undo
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:25:&SESSION.::&DEBUG.:RP,25,RIR::'
+      page: 25 # Sales by Product and Store by Week
+      clear-cache: RP,25,RIR
+
+    warn-on-unsaved-changes: Do Not Check
+
+- # ====== Button: up ==========================================
+  id: 39013799023194459137
+  identification: 
+    button-name: up
+    label: Up
+
+  layout: 
+    sequence: 10
+    region: breadcrumb # 38767803014184453652
+    slot: UP
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--noUI
+    icon: fa-arrow-up
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:19:&SESSION.::&DEBUG.:::'
+      page: 19 # Reports
+
+    warn-on-unsaved-changes: Do Not Check
+
+processes: 
+- # ====== Process: set region names ===========================
+  id: 38768849607679250512
+  identification: 
+    name: set region names
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |
+      declare
+         i integer := 0;
+      begin
+      
+      for c1 in (select region_name from OOW_DEMO_REGIONS order by id) loop
+         i := i + 1;
+         if i = 1 then :R1 := c1.region_name; end if;
+         if i = 2 then :R2 := c1.region_name; end if;
+         if i = 3 then :R3 := c1.region_name; end if;
+         if i = 4 then :R4 := c1.region_name; end if;
+         if i = 5 then :R5 := c1.region_name; end if;
+      end loop;
+      end;
+
+  execution: 
+    sequence: 10
+    point: Before Header
+    run-process: Once Per Page Visit (default)
+

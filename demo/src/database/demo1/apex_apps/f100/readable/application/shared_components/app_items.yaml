@@ -1,0 +1,118 @@
+---
+- # ====== Application Item: LAST_VIEW =========================
+  id: 36815677922174329833
+  identification: 
+    name: LAST_VIEW
+    scope: Application
+
+  security: 
+    session-state-protection: Checksum Required - Session Level
+    escape-special-characters: false
+
+  subscription: 
+    version-number: 1
+
+- # ====== Application Item: PRODUCTS ==========================
+  id: 37220267983603356784
+  identification: 
+    name: PRODUCTS
+    scope: Application
+
+  security: 
+    session-state-protection: Restricted - May not be set from browser
+    escape-special-characters: false
+
+  subscription: 
+    version-number: 1
+
+- # ====== Application Item: STORES ============================
+  id: 37220268167542357611
+  identification: 
+    name: STORES
+    scope: Application
+
+  security: 
+    session-state-protection: Restricted - May not be set from browser
+    escape-special-characters: false
+
+  subscription: 
+    version-number: 1
+
+- # ====== Application Item: R2 ================================
+  id: 38768848203131220790
+  identification: 
+    name: R2
+    scope: Application
+
+  security: 
+    session-state-protection: Checksum Required - Session Level
+    escape-special-characters: false
+
+  subscription: 
+    version-number: 1
+
+- # ====== Application Item: R1 ================================
+  id: 38768848507979222211
+  identification: 
+    name: R1
+    scope: Application
+
+  security: 
+    session-state-protection: Checksum Required - Session Level
+    escape-special-characters: false
+
+  subscription: 
+    version-number: 1
+
+- # ====== Application Item: R3 ================================
+  id: 38768848709364222589
+  identification: 
+    name: R3
+    scope: Application
+
+  security: 
+    session-state-protection: Checksum Required - Session Level
+    escape-special-characters: false
+
+  subscription: 
+    version-number: 1
+
+- # ====== Application Item: R4 ================================
+  id: 38768848911096223156
+  identification: 
+    name: R4
+    scope: Application
+
+  security: 
+    session-state-protection: Checksum Required - Session Level
+    escape-special-characters: false
+
+  subscription: 
+    version-number: 1
+
+- # ====== Application Item: R5 ================================
+  id: 38768849112481223559
+  identification: 
+    name: R5
+    scope: Application
+
+  security: 
+    session-state-protection: Checksum Required - Session Level
+    escape-special-characters: false
+
+  subscription: 
+    version-number: 1
+
+- # ====== Application Item: IN_MEMORY_HINT ====================
+  id: 40472740532150603907
+  identification: 
+    name: IN_MEMORY_HINT
+    scope: Application
+
+  security: 
+    session-state-protection: Restricted - May not be set from browser
+    escape-special-characters: false
+
+  subscription: 
+    version-number: 1
+

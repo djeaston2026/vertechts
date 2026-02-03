@@ -1,0 +1,94 @@
+---
+- # ====== Static Application File: icons/app-icon-256-rounded.p
+  id: 23404196725165506900
+  identification: 
+    file-name: icons/app-icon-256-rounded.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: icons/app-icon-144-rounded.p
+  id: 23404312751617137241
+  identification: 
+    file-name: icons/app-icon-144-rounded.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: icons/app-icon-32.png ======
+  id: 36278501428308422999
+  identification: 
+    file-name: icons/app-icon-32.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: icons/app-icon-192.png =====
+  id: 36278501607045423028
+  identification: 
+    file-name: icons/app-icon-192.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: icons/app-icon-512.png =====
+  id: 36278501917434423058
+  identification: 
+    file-name: icons/app-icon-512.png
+
+  attributes: 
+    mime-type: image/png
+    file-character-set: Unicode UTF-8
+
+- # ====== Static Application File: excanvas.min.js ============
+  id: 37474424513781380406
+  identification: 
+    file-name: excanvas.min.js
+
+  attributes: 
+    mime-type: text/javascript
+
+- # ====== Static Application File: jquery.flot.min.js =========
+  id: 37474424754099380422
+  identification: 
+    file-name: jquery.flot.min.js
+
+  attributes: 
+    mime-type: text/javascript
+
+- # ====== Static Application File: jquery.flot.resize.js ======
+  id: 37474424914562380425
+  identification: 
+    file-name: jquery.flot.resize.js
+
+  attributes: 
+    mime-type: text/javascript
+
+- # ====== Static Application File: jquery.flot.selection.js ===
+  id: 37474425202955380429
+  identification: 
+    file-name: jquery.flot.selection.js
+
+  attributes: 
+    mime-type: text/javascript
+
+- # ====== Static Application File: blue_marker.png ============
+  id: 37474425583956380432
+  identification: 
+    file-name: blue_marker.png
+
+  attributes: 
+    mime-type: image/png
+
+- # ====== Static Application File: red_marker.png =============
+  id: 37474425873938380434
+  identification: 
+    file-name: red_marker.png
+
+  attributes: 
+    mime-type: image/png
+

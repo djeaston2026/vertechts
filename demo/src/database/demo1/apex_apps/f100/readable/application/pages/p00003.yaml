@@ -1,0 +1,1330 @@
+---
+# ====== Page: Store =========================================
+id: 3
+identification: 
+  name: Store
+  title: Store
+
+appearance: 
+  page-mode: Normal
+  page-template: Standard
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: false
+
+html-header: 
+  html-header: |
+    <style type="text/css">
+    section#editProduct.uRegion div.uRegionContent table.formlayout {margin-left: 20px;}
+    section#addProduct.uRegion div.uRegionContent table.formlayout {margin-left: 20px;}
+    </style>
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Unrestricted
+  form-auto-complete: On
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Always
+
+server-cache: 
+  caching: Disabled
+
+regions: 
+- # ====== Region: Breadcrumb ==================================
+  id: 38751017209356917950
+  identification: 
+    name: Breadcrumb
+    type: Breadcrumb
+
+  source: 
+    breadcrumb: ' Breadcrumb' # 44377004153871086216
+
+  layout: 
+    sequence: 50
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Title Bar
+    template-options: 
+    - '#DEFAULT#'
+    - t-BreadcrumbRegion--useBreadcrumbTitle
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      breadcrumb-template: Breadcrumb
+      template-options: 
+      - '#DEFAULT#'
+
+- # ====== Region: Store Products ==============================
+  id: 38751023607356149316
+  identification: 
+    name: Store Products
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select
+          i.item_name product,
+          i.item_type,
+          i.item_desc,
+          i.msrp,
+          s.ID,
+          s.STORE_ID,
+          s.ITEM_ID,
+          s.SALE_START_DATE,
+          s.DISCOUNT_PCT,
+          s.SALE_END_DATE,
+          nvl(s.ITEM_PRICE,i.msrp) item_price,
+          nvl(s.item_price,i.msrp) - (nvl(s.item_price,i.msrp) * nvl(s.discount_pct,0) * .01) sale_price,
+          i.id product_id
+      from OOW_DEMO_STORE_PRODUCTS s,
+          OOW_DEMO_items i
+      where s.store_id = :P3_ID
+          and i.id = s.item_id
+      order by 1
+
+  order-by: 
+    type: None
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noPadding
+    - t-Region--noUI
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 1000
+
+    appearance: 
+      template-type: Theme
+      template: Standard
+      template-options: 
+      - '#DEFAULT#'
+      - t-Report--stretch
+      - t-Report--staticRowColors
+      - t-Report--rowHighlight
+
+    pagination: 
+      type: No Pagination (Show All Rows)
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+      maximum-rows-to-process: 1000
+
+    messages: 
+      when-no-data-found: no data found
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: true
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: ITEM_TYPE ===================================
+    id: 24028381019928673
+    identification: 
+      column-name: ITEM_TYPE
+      type: Plain Text
+
+    heading: 
+      heading: Item Type
+      alignment: start
+
+    layout: 
+      sequence: 140
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: PRODUCT_ID ==================================
+    id: 13905846322843641386
+    identification: 
+      column-name: PRODUCT_ID
+      type: Link
+
+    heading: 
+      heading: Edit
+      alignment: center
+
+    layout: 
+      sequence: 10
+      column-alignment: center
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:12:&SESSION.::&DEBUG.:RP,12:P12_ID:#PRODUCT_ID#'
+        page: 12 # Product
+        clear-cache: RP,12
+        values: 
+          p12_id: '#PRODUCT_ID#'
+
+      link-text: <span class="fa fa-edit" aria-hidden="true"></span>
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ID ==========================================
+    id: 38751023929791149318
+    identification: 
+      column-name: ID
+      type: Hidden
+
+    layout: 
+      sequence: 50
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: STORE_ID ====================================
+    id: 38751024009452149318
+    identification: 
+      column-name: STORE_ID
+      type: Hidden
+
+    layout: 
+      sequence: 60
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ITEM_ID =====================================
+    id: 38751024108420149318
+    identification: 
+      column-name: ITEM_ID
+      type: Hidden
+
+    layout: 
+      sequence: 70
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: SALE_START_DATE =============================
+    id: 38751024222093149318
+    identification: 
+      column-name: SALE_START_DATE
+      type: Plain Text
+
+    heading: 
+      heading: Promo Start
+      alignment: start
+
+    layout: 
+      sequence: 90
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: DD-MON-YYYY
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: DISCOUNT_PCT ================================
+    id: 38751024328901149318
+    identification: 
+      column-name: DISCOUNT_PCT
+      type: Plain Text
+
+    heading: 
+      heading: Discount %
+      alignment: center
+
+    layout: 
+      sequence: 80
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: SALE_END_DATE ===============================
+    id: 38751024416594149318
+    identification: 
+      column-name: SALE_END_DATE
+      type: Plain Text
+
+    heading: 
+      heading: Promo End
+      alignment: start
+
+    layout: 
+      sequence: 100
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: DD-MON-YYYY
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ITEM_PRICE ==================================
+    id: 38751024499697149318
+    identification: 
+      column-name: ITEM_PRICE
+      type: Plain Text
+
+    heading: 
+      heading: Suggested Price
+      alignment: start
+
+    layout: 
+      sequence: 30
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: 999G999G999G999G999G990D00
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: PRODUCT =====================================
+    id: 38751024899522156533
+    identification: 
+      column-name: PRODUCT
+      type: Link
+
+    heading: 
+      heading: Product
+      alignment: center
+
+    layout: 
+      sequence: 20
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:18:&SESSION.::&DEBUG.:RP,18:P18_ID:#PRODUCT_ID#'
+        page: 18 # Sales by Product
+        clear-cache: RP,18
+        values: 
+          p18_id: '#PRODUCT_ID#'
+
+      link-text: '#PRODUCT#'
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: SALE_PRICE ==================================
+    id: 38751025517445180630
+    identification: 
+      column-name: SALE_PRICE
+      type: Plain Text
+
+    heading: 
+      heading: Sale Price
+      alignment: center
+
+    layout: 
+      sequence: 40
+      column-alignment: end
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: 999G999G999G999G999G990D00
+
+    sorting: 
+      sortable: false
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: ITEM_DESC ===================================
+    id: 38751493601299989397
+    identification: 
+      column-name: ITEM_DESC
+      type: Hidden
+
+    layout: 
+      sequence: 120
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: MSRP ========================================
+    id: 38751494027591033749
+    identification: 
+      column-name: MSRP
+      type: Hidden
+
+    layout: 
+      sequence: 130
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+- # ====== Region: Store Performance ===========================
+  id: 39528996699378362959
+  identification: 
+    name: Store Performance
+    type: Classic Report
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select store_name, 
+             STORE_OPEN_DATE,
+             sysdate - cast(STORE_OPEN_DATE as date)  days_open,
+             sales_trailing_30_days, 
+             sales_prior_30_days, 
+             nvl(sales_trailing_30_days,0) - nvl(sales_prior_30_days,0) sales_trend,
+             first_sale,
+             most_recent_sale,
+             sysdate - cast(first_sale as date) days_since_first_sale
+      from (
+      select s.STORE_OPEN_DATE,
+             s.store_name,
+             (select sum(QUANTITY*ITEM_PRICE) qp 
+              from #OWNER#.OOW_DEMO_SALES_HISTORY h 
+              where DATE_OF_SALE > sysdate - 30 and 
+                    h.store_id = :P3_ID) sales_trailing_30_days,
+              (select sum(QUANTITY*ITEM_PRICE) qp 
+              from #OWNER#.OOW_DEMO_SALES_HISTORY h 
+              where DATE_OF_SALE > sysdate - 60 and 
+                    date_of_sale < sysdate - 30 and
+                    h.store_id  = :P3_ID) sales_prior_30_days,
+              (select min(DATE_OF_SALE) from #OWNER#.OOW_DEMO_SALES_HISTORY h where store_id = :P3_ID) first_sale,
+              (select max(DATE_OF_SALE) from #OWNER#.OOW_DEMO_SALES_HISTORY h where store_id = :P3_ID) most_recent_sale
+      from #OWNER#.OOW_DEMO_STORES s
+      where id = :P3_ID
+      ) x
+      
+        
+
+  order-by: 
+    type: None
+
+  layout: 
+    sequence: 5
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noUI
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    layout: 
+      number-of-rows-type: Static Value
+      number-of-rows: 15
+
+    appearance: 
+      template-type: Theme
+      template: Value Attribute Pairs - Column
+      template-options: 
+      - '#DEFAULT#'
+      - t-AVPList--leftAligned
+
+    pagination: 
+      type: No Pagination (Show All Rows)
+      partial-page-refresh: true
+
+    performance: 
+      lazy-loading: false
+
+    break-formatting: 
+      break-columns: No Break
+
+    advanced: 
+      strip-html: false
+      sort-nulls: Last
+
+    heading: 
+      type: Custom Headings
+
+    download: 
+      csv-export-enabled: false
+
+    printing: 
+      enabled: false
+
+  columns: 
+  - # ====== Column: SALES_TRAILING_30_DAYS ======================
+    id: 39528997270402362964
+    identification: 
+      column-name: SALES_TRAILING_30_DAYS
+      type: Plain Text
+
+    heading: 
+      heading: Sales Trailing 30 Days
+      alignment: center
+
+    layout: 
+      sequence: 40
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: FML999G999G999G999G990D00
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: SALES_PRIOR_30_DAYS =========================
+    id: 39528997355049362965
+    identification: 
+      column-name: SALES_PRIOR_30_DAYS
+      type: Plain Text
+
+    heading: 
+      heading: Sales Prior 30 Days
+      alignment: center
+
+    layout: 
+      sequence: 50
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: FML999G999G999G999G990D00
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: STORE_NAME ==================================
+    id: 39780844859398926718
+    identification: 
+      column-name: STORE_NAME
+      type: Plain Text
+
+    heading: 
+      heading: Store Name
+      alignment: center
+
+    layout: 
+      sequence: 10
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: FIRST_SALE ==================================
+    id: 39780844920823926719
+    identification: 
+      column-name: FIRST_SALE
+      type: Plain Text
+
+    heading: 
+      heading: First Sale
+      alignment: center
+
+    layout: 
+      sequence: 70
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: DAYS_SINCE_FIRST_SALE =======================
+    id: 39780845099313926721
+    identification: 
+      column-name: DAYS_SINCE_FIRST_SALE
+      type: Plain Text
+
+    heading: 
+      heading: Days Since First Sale
+      alignment: center
+
+    layout: 
+      sequence: 90
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: 999G999G999G999G999G999G990
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: SALES_TREND =================================
+    id: 39780845215061926722
+    identification: 
+      column-name: SALES_TREND
+      type: Plain Text
+
+    heading: 
+      heading: Sales Trend
+      alignment: center
+
+    layout: 
+      sequence: 60
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: FML999G999G999G999G990D00
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: MOST_RECENT_SALE ============================
+    id: 39780845292396926723
+    identification: 
+      column-name: MOST_RECENT_SALE
+      type: Plain Text
+
+    heading: 
+      heading: Most Recent Sale
+      alignment: center
+
+    layout: 
+      sequence: 80
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: STORE_OPEN_DATE =============================
+    id: 39780845475994926724
+    identification: 
+      column-name: STORE_OPEN_DATE
+      type: Plain Text
+
+    heading: 
+      heading: Store Open Date
+      alignment: center
+
+    layout: 
+      sequence: 20
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: fmDay, fmDD fmMonth, YYYY
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+  - # ====== Column: DAYS_OPEN ===================================
+    id: 39780845566296926725
+    identification: 
+      column-name: DAYS_OPEN
+      type: Plain Text
+
+    heading: 
+      heading: Days Open
+      alignment: center
+
+    layout: 
+      sequence: 30
+      column-alignment: start
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: 999G999G999G999G999G999G990
+
+    sorting: 
+      sortable: true
+
+    export-/-printing: 
+      include-in-export-/-print: true
+
+    advanced: 
+      compute-sum: false
+
+    ui-defaults-reference: 
+      table-owner: Parsing Schema
+
+    security: 
+      escape-special-characters: true
+
+page-items: 
+- # ====== Page Item: P3_STORE_NAME ============================
+  id: 36978737294122888667
+  identification: 
+    name: P3_STORE_NAME
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 30
+    region: No Parent
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P3_ID ====================================
+  id: 38751019726027927582
+  identification: 
+    name: P3_ID
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 10
+    region: No Parent
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P3_PRODUCT_ID ============================
+  id: 38751480425953739909
+  identification: 
+    name: P3_PRODUCT_ID
+    type: Hidden
+
+  settings: 
+    value-protected: false
+
+  layout: 
+    sequence: 20
+    region: No Parent
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+buttons: 
+- # ====== Button: EDIT_STORE ==================================
+  id: 38751025905370205448
+  identification: 
+    button-name: EDIT_STORE
+    label: Edit Store
+
+  layout: 
+    sequence: 20
+    region: Breadcrumb # 38751017209356917950
+    slot: CREATE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--noUI
+    - t-Button--iconLeft
+    icon: fa-edit
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:7:&SESSION.::&DEBUG.:7:P7_ID:&P3_ID.'
+      page: 7 # Store
+      clear-cache: 7
+      values: 
+        p7_id: '&P3_ID.'
+
+    warn-on-unsaved-changes: Do Not Check
+
+- # ====== Button: up ==========================================
+  id: 39016011415480598126
+  identification: 
+    button-name: up
+    label: Up
+
+  layout: 
+    sequence: 10
+    region: Breadcrumb # 38751017209356917950
+    slot: UP
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--noUI
+    icon: fa-arrow-up
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:6:&SESSION.::&DEBUG.:::'
+      page: 6 # Stores Report  - Content Row
+
+    warn-on-unsaved-changes: Do Not Check
+
+dynamic-actions: 
+- # ====== Dynamic Action: Change price ========================
+  id: 38751571209010062673
+  identification: 
+    name: Change price
+
+  execution: 
+    sequence: 10
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P3_ADD_ID
+
+  actions: 
+  - # ====== Action: Set Value ===================================
+    id: 38751571519232062674
+    identification: 
+      action: Set Value
+
+    settings: 
+      set-type: SQL Statement
+      sql-statement: 'select msrp from OOW_DEMO_items where id = :P3_ADD_ID;'
+      items-to-submit: 
+      - P3_ADD_ID
+      escape-special-characters: true
+      suppress-change-event: false
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P3_ADD_PRICE
+
+    execution: 
+      sequence: 10
+      event: Change price # 38751571209010062673
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+      stop-execution-on-error: true
+      wait-for-result: true
+
+computations: 
+- # ====== Computation: P3_STORE_NAME ==========================
+  id: 39010877711738124946
+  identification: 
+    item-name: P3_STORE_NAME
+
+  execution: 
+    sequence: 10
+    point: Before Header
+
+  computation: 
+    type: SQL Query (return single value)
+    sql-query: |
+      select store_name ||' - '||
+      STORE_ADDRESS || ' '||
+      STORE_CITY||', '||
+      STORE_STATE ||' '||
+      STORE_ZIP x
+      from #OWNER#.oow_demo_stores s where s.id = :P3_ID
+
+processes: 
+- # ====== Process: start timer ================================
+  id: 13910076490960342694
+  identification: 
+    name: start timer
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: oow_demo_timing.start_timer;
+
+  execution: 
+    sequence: 40
+    point: Before Header
+    run-process: Once Per Page Visit (default)
+
+- # ====== Process: Add Product ================================
+  id: 38751519900998981714
+  identification: 
+    name: Add Product
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |
+      insert into OOW_DEMO_STORE_PRODUCTS
+      (store_id, item_id, item_price, discount_pct, sale_start_date, sale_end_date)
+      values
+      (:P3_ID, :P3_ADD_ID, :P3_ADD_PRICE, :P3_ADD_DISCOUNT, :P3_ADD_PROMO_START, :P3_ADD_PROMO_END);
+
+  execution: 
+    sequence: 20
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  success-message: 
+    success-message: Product added.
+
+  error: 
+    error-message: '#SQLERRM#'
+    display-location: Inline in Notification
+
+- # ====== Process: Update Product =============================
+  id: 38751567820203573878
+  identification: 
+    name: Update Product
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |
+      -- Update the product price info for this store
+      update
+          OOW_DEMO_STORE_PRODUCTS
+      set
+          item_price = :P3_EDIT_PRICE,
+          discount_pct = :P3_EDIT_DISCOUNT,
+          sale_start_date = :P3_EDIT_PROMO_START,
+          sale_end_date = :P3_EDIT_PROMO_END
+      where
+          item_id = :P3_PRODUCT_ID
+      and
+          store_id = :P3_ID;
+      
+      :P3_PRODUCT_ID := null;
+      :P3_EDIT_PRICE := null;
+      :P3_EDIT_DISCOUNT := null;
+      :P3_EDIT_PROMO_START := null;
+      :P3_EDIT_PROMO_END := null;
+
+  execution: 
+    sequence: 10
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  success-message: 
+    success-message: Product updated.
+
+  error: 
+    error-message: 'update error #SQLERRM#'
+    display-location: Inline in Notification
+
+- # ====== Process: delete product =============================
+  id: 38753856499709039191
+  identification: 
+    name: delete product
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: 'delete from OOW_DEMO_STORE_PRODUCTS where item_id = :P3_PRODUCT_ID and store_id = :P3_ID;'
+
+  execution: 
+    sequence: 30
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  success-message: 
+    success-message: Product removed.
+
+  error: 
+    error-message: Unable to remove the product.
+    display-location: Inline in Notification
+
+branches: 
+- # ====== Branch: Go To Page 3 ================================
+  id: 38751526117687166351
+  identification: 
+    name: Go To Page 3
+
+  execution: 
+    sequence: 10
+    point: After Processing
+
+  behavior: 
+    type: Page or URL (Redirect)
+    target: 
+      url: 'f?p=&APP_ID.:3:&SESSION.::&DEBUG.:::&success_msg=#SUCCESS_MSG#'
+      page: 3 # Store
+
+  comments: 
+    comments: 'Created 13-SEP-2012 12:08 by ALLAN'
+

@@ -5,7 +5,7 @@
     name: Navigation Menu
 
   subscription: 
-    version-number: 46142712654828
+    version-number: 46196293436271
 
   source: 
     type: Static Values
@@ -36,10 +36,10 @@
     user-defined-attributes: 
       translatable: false
 
-  - # ====== Entry: Emp ==========================================
+  - # ====== Entry: Employee =====================================
     id: 9477359289482795
     label: 
-      label: Emp
+      label: Employee
 
     icon: 
       image/icon-css-classes: fa-table
@@ -54,8 +54,59 @@
 
     link: 
       target: 
-        url: 'f?p=&APP_ID.:4:&APP_SESSION.::&DEBUG.:::'
+        url: 'f?p=&APP_ID.:4:&SESSION.::&DEBUG.::::'
         page: 4 # Emp
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: page2 ========================================
+    id: 10844624727662100
+    label: 
+      label: page2
+
+    icon: 
+      image/icon-css-classes: fa-file-o
+
+    layout: 
+      sequence: 30
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 2
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:2:&APP_SESSION.::&DEBUG.:::'
+        page: 2 # page2
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: Page5 ========================================
+    id: 11044220032299739
+    label: 
+      label: Page5
+
+    layout: 
+      sequence: 40
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 5
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:5:&APP_SESSION.::&DEBUG.:::'
+        page: 5 # Page5
 
     click-counting: 
       count-clicks: false

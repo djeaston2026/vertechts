@@ -1,0 +1,1384 @@
+---
+- # ====== List: Navigation Menu ===============================
+  id: 37113776901885144853
+  identification: 
+    name: Navigation Menu
+
+  subscription: 
+    version-number: 37167692709710
+
+  source: 
+    type: Static Values
+
+  entries: 
+  - # ====== Entry: Home =========================================
+    id: 37113777058635144853
+    label: 
+      label: Home
+
+    icon: 
+      image/icon-css-classes: fa-home
+
+    layout: 
+      sequence: 10
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 1
+      - 14
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:1:&SESSION.::&DEBUG.::::'
+        page: 1 # Home
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: Dashboard ====================================
+    id: 37113777123653144853
+    label: 
+      label: Dashboard
+
+    icon: 
+      image/icon-css-classes: fa-line-chart
+
+    layout: 
+      sequence: 20
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:5:&SESSION.::&DEBUG.::::'
+        page: 5 # Sales
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: Stores [&STORES.] ============================
+    id: 37113777355868144853
+    label: 
+      label: Stores [&STORES.]
+
+    icon: 
+      image/icon-css-classes: fa-cart-full
+
+    layout: 
+      sequence: 40
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 6
+      - 7
+      - 3
+      - 43
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:6:&SESSION.::&DEBUG.::::'
+        page: 6 # Stores Report  - Content Row
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: Products [&PRODUCTS.] ========================
+    id: 37113777402643144853
+    label: 
+      label: Products [&PRODUCTS.]
+
+    icon: 
+      image/icon-css-classes: fa-archive
+
+    layout: 
+      sequence: 50
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 11
+      - 12
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:11:&SESSION.::&DEBUG.::::'
+        page: 11 # Products
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: Transactions =================================
+    id: 37113777655952144853
+    label: 
+      label: Transactions
+
+    icon: 
+      image/icon-css-classes: fa-credit-card
+
+    layout: 
+      sequence: 60
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 28
+      - 29
+      - 30
+      - 31
+      - 33
+      - 34
+      - 35
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:28:&SESSION.::&DEBUG.::::'
+        page: 28 # Generate Transactions
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: Reports ======================================
+    id: 37113777715784144853
+    label: 
+      label: Reports
+
+    icon: 
+      image/icon-css-classes: fa-file-o
+
+    layout: 
+      sequence: 70
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 19
+      - 20
+      - 22
+      - 25
+      - 20
+      - 26
+      - 27
+      - 32
+      - 36
+      - 37
+      - 38
+      - 2
+      - 23
+      - 42
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:19:&SESSION.::&DEBUG.::::'
+        page: 19 # Reports
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: Administration ===============================
+    id: 37113777805544144853
+    label: 
+      label: Administration
+
+    icon: 
+      image/icon-css-classes: fa-gear
+
+    layout: 
+      sequence: 80
+
+    is-current: 
+      type: Pages
+      pages: 
+      - 4
+      - 8
+      - 9
+      - 13
+      - 15
+      - 16
+      - 17
+      - 24
+      - 21
+      - null
+      - 40
+      - 41
+      - 42
+      - 45
+      - 23
+      - 39
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:4:&SESSION.::&DEBUG.::::'
+        page: 4 # Administration
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+- # ====== List: Navigation Bar ================================
+  id: 37114080571725239230
+  identification: 
+    name: Navigation Bar
+
+  subscription: 
+    version-number: 37167692709710
+
+  source: 
+    type: Static Values
+
+  entries: 
+  - # ====== Entry: &APP_USER. ===================================
+    id: 37114081150249239231
+    label: 
+      label: '&APP_USER.'
+
+    icon: 
+      image/icon-css-classes: a-Icon icon-user
+
+    layout: 
+      sequence: 20
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: '#'
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      2.: has-username
+
+  - # ====== Entry: Sign Out =====================================
+    id: 37114081565336239232
+    label: 
+      label: Sign Out
+
+    layout: 
+      sequence: 30
+      parent-entry: '&APP_USER.' # 37114081150249239231
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: '&LOGOUT_URL.'
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+
+  - # ====== Entry: Install App ==================================
+    id: 38908223315849718659
+    label: 
+      label: Install App
+
+    icon: 
+      image/icon-css-classes: fa-cloud-download
+
+    layout: 
+      sequence: 1
+
+    is-current: 
+      type: Never
+
+    link: 
+      target: '#action$a-pwa-install'
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      2.: a-pwaInstall
+
+- # ====== List: Application Actions ===========================
+  id: 38749467509647977470
+  identification: 
+    name: Application Actions
+
+  subscription: 
+    version-number: 37167692709710
+
+  source: 
+    type: Static Values
+
+  entries: 
+  - # ====== Entry: Sales History ================================
+    id: 13852462984189576554
+    label: 
+      label: Sales History
+
+    icon: 
+      image/icon-css-classes: fa-credit-card
+
+    layout: 
+      sequence: 56
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:2:&SESSION.::&DEBUG.:RP,2:::'
+        page: 2 # Sales History Content Row
+        clear-cache: RP,2
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Identify product items available for sale at one or more stores
+
+  - # ====== Entry: Stores =======================================
+    id: 38749467729100977471
+    label: 
+      label: Stores
+
+    icon: 
+      image/icon-css-classes: fa-shopping-bag
+
+    layout: 
+      sequence: 40
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:6:&SESSION.::&DEBUG.::::'
+        page: 6 # Stores Report  - Content Row
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Identify attributes, products sold, discounts and geographic region
+
+  - # ====== Entry: Regions ======================================
+    id: 38749470218782989584
+    label: 
+      label: Regions
+
+    icon: 
+      image/icon-css-classes: fa-globe
+
+    layout: 
+      sequence: 30
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:8:&SESSION.::&DEBUG.:RP:::'
+        page: 8 # Store Regions
+        clear-cache: RP
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Each store is mapped to a geographic region
+
+  - # ====== Entry: Products =====================================
+    id: 38749472708524996018
+    label: 
+      label: Products
+
+    icon: 
+      image/icon-css-classes: fa-package
+
+    layout: 
+      sequence: 50
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:11:&SESSION.::&DEBUG.:RP:::'
+        page: 11 # Products
+        clear-cache: RP
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Identify product items available for sale at one or more stores
+
+  - # ====== Entry: Store Locations Map ==========================
+    id: 38750916420313737169
+    label: 
+      label: Store Locations Map
+
+    icon: 
+      image/icon-css-classes: fa-map-o
+
+    layout: 
+      sequence: 20
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:10:&SESSION.::&DEBUG.:10:::'
+        page: 10 # Store Locations Map
+        clear-cache: 10
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Set production promotions by store using map interface.
+
+    configuration: 
+      build-option: Maps # 38767857112642991873
+
+  - # ====== Entry: Sales Dashboard ==============================
+    id: 38752443626536020988
+    label: 
+      label: Sales Dashboard
+
+    icon: 
+      image/icon-css-classes: fa-line-chart
+
+    layout: 
+      sequence: 10
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:5:&SESSION.::&DEBUG.:RP:::'
+        page: 5 # Sales
+        clear-cache: RP
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Analysis dashboard of sales data.
+
+  - # ====== Entry: Generate Transactions ========================
+    id: 38767859209227019352
+    label: 
+      label: Generate Transactions
+
+    icon: 
+      image/icon-css-classes: fa-gears
+
+    layout: 
+      sequence: 60
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:28:&SESSION.::&DEBUG.::::'
+        page: 28 # Generate Transactions
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Generate sale transactions
+
+  - # ====== Entry: Analysis Reports =============================
+    id: 38767859505089169491
+    label: 
+      label: Analysis Reports
+
+    icon: 
+      image/icon-css-classes: fa-file-o
+
+    layout: 
+      sequence: 70
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:19:&SESSION.::&DEBUG.::::'
+        page: 19 # Reports
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Run reports to analyze sales history data.
+
+  - # ====== Entry: Administration ===============================
+    id: 39007440577416510700
+    label: 
+      label: Administration
+
+    icon: 
+      image/icon-css-classes: fa-user
+
+    layout: 
+      sequence: 80
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:4:&SESSION.::&DEBUG.::::'
+        page: 4 # Administration
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Run reports to analyze sales history data.
+
+- # ====== List: Settings ======================================
+  id: 38751531209300258492
+  identification: 
+    name: Settings
+
+  subscription: 
+    version-number: 37167692709710
+
+  source: 
+    type: Static Values
+
+  entries: 
+  - # ====== Entry: Page Views ===================================
+    id: 24512838471905617036
+    label: 
+      label: Page Views
+
+    icon: 
+      image/icon-css-classes: fa-analytics
+
+    layout: 
+      sequence: 70
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:39:&SESSION.::&DEBUG.:RP,10020:::'
+        page: 39 # Page Views
+        clear-cache: RP,10020
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Set application configuration
+
+  - # ====== Entry: Theme Style ==================================
+    id: 37214784311475144445
+    label: 
+      label: Theme Style
+
+    icon: 
+      image/icon-css-classes: fa-desktop
+
+    layout: 
+      sequence: 40
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:10010:&SESSION.::&DEBUG.:RP,10010:::'
+        page: 10010 # Theme Style Selection
+        clear-cache: RP,10010
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Set application user interface theme style for all users
+
+  - # ====== Entry: Top Users ====================================
+    id: 38751532002418258494
+    label: 
+      label: Top Users
+
+    icon: 
+      image/icon-css-classes: fa-line-chart
+
+    layout: 
+      sequence: 10
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:16:&SESSION.::&DEBUG.::::'
+        page: 16 # Top Users
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Report of page views aggregated by user.
+      2.: reportIcon
+
+  - # ====== Entry: Activity Calendar ============================
+    id: 38751563803955446244
+    label: 
+      label: Activity Calendar
+
+    icon: 
+      image/icon-css-classes: fa-calendar
+
+    layout: 
+      sequence: 20
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:17:&SESSION.::&DEBUG.:17:::'
+        page: 17 # Activity Calendar
+        clear-cache: 17
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Calendar view of all application activity by user.
+      2.: calendarIcon
+
+  - # ====== Entry: Event Log ====================================
+    id: 38771288405364455801
+    label: 
+      label: Event Log
+
+    icon: 
+      image/icon-css-classes: fa-table
+
+    layout: 
+      sequence: 30
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:21:&SESSION.::&DEBUG.:RP:::'
+        page: 21 # Event Log
+        clear-cache: RP
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: View administrative and debug event log.
+      2.: reportIcon
+
+  - # ====== Entry: Build Options ================================
+    id: 40216593596403779934
+    label: 
+      label: Build Options
+
+    icon: 
+      image/icon-css-classes: fa-check-square-o
+
+    layout: 
+      sequence: 50
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:10020:&SESSION.::&DEBUG.:RP,10020:::'
+        page: 10020 # Configuration Options
+        clear-cache: RP,10020
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Set application configuration
+
+- # ====== List: reports =======================================
+  id: 38752484205117287316
+  identification: 
+    name: reports
+
+  subscription: 
+    version-number: 37167692709710
+
+  source: 
+    type: Static Values
+
+  entries: 
+  - # ====== Entry: Sales by Region by Week ======================
+    id: 38752489825081359369
+    label: 
+      label: Sales by Region by Week
+
+    icon: 
+      image/icon-css-classes: fa-dollar
+
+    layout: 
+      sequence: 30
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:22:&SESSION.::&DEBUG.:RP:::'
+        page: 22 # Sales by Store by Week
+        clear-cache: RP
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Weekly sales metrics by region
+      2.: reportIcon
+
+  - # ====== Entry: Sales by Product and Region by Week ==========
+    id: 38767805120003474100
+    label: 
+      label: Sales by Product and Region by Week
+
+    icon: 
+      image/icon-css-classes: fa-dollar
+
+    layout: 
+      sequence: 40
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:25:&SESSION.::&DEBUG.:RP:::'
+        page: 25 # Sales by Product and Store by Week
+        clear-cache: RP
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Interactive report of weekly sales metrics by product by region
+      2.: reportIcon
+
+  - # ====== Entry: Sales by Store by Day ========================
+    id: 38767821420621568955
+    label: 
+      label: Sales by Store by Day
+
+    icon: 
+      image/icon-css-classes: fa-calendar
+
+    layout: 
+      sequence: 50
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:20:&SESSION.::&DEBUG.:RP:::'
+        page: 20 # Sales by Store by Day
+        clear-cache: RP
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: View monthly calendar of sales by store by day
+      2.: calendarIcon
+
+  - # ====== Entry: Products Available by Store ==================
+    id: 38767836099064631919
+    label: 
+      label: Products Available by Store
+
+    icon: 
+      image/icon-css-classes: fa-archive
+
+    layout: 
+      sequence: 60
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:27:&SESSION.::&DEBUG.:RP:::'
+        page: 27 # Product Availability
+        clear-cache: RP
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: View percentages of products available at each store
+      2.: reportIcon
+
+  - # ====== Entry: Table Row Counts =============================
+    id: 38767963401476075460
+    label: 
+      label: Table Row Counts
+
+    icon: 
+      image/icon-css-classes: fa-table
+
+    layout: 
+      sequence: 90
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:32:&SESSION.::&DEBUG.:RP:::'
+        page: 32 # Table Counts
+        clear-cache: RP
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: View a list of the database tables used by this demonstration system and the current row counts.
+      2.: reportIcon
+
+- # ====== List: Transactions ==================================
+  id: 38767843629350277633
+  identification: 
+    name: Transactions
+
+  subscription: 
+    version-number: 37167692709710
+
+  source: 
+    type: Static Values
+
+  entries: 
+  - # ====== Entry: Generate Transaction on Button Click =========
+    id: 38767843819341277633
+    label: 
+      label: Generate Transaction on Button Click
+
+    icon: 
+      image/icon-css-classes: fa-gear
+
+    layout: 
+      sequence: 10
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:29:&SESSION.::&DEBUG.::::'
+        page: 29 # Generate Transaction
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Generate one transaction for a random product from a random store.  Press button complete transaction.
+
+  - # ====== Entry: Generate Transaction on Page Load ============
+    id: 38767850411060802228
+    label: 
+      label: Generate Transaction on Page Load
+
+    icon: 
+      image/icon-css-classes: fa-gear
+
+    layout: 
+      sequence: 20
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:30:&SESSION.::&DEBUG.::::'
+        page: 30 # Transaction
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Generate one transaction by loading the page.  Includes option to automatically resubmit page via javascript.
+
+  - # ====== Entry: Generate 100 Transactions on Page Load =======
+    id: 38767856026176872774
+    label: 
+      label: Generate 100 Transactions on Page Load
+
+    icon: 
+      image/icon-css-classes: fa-gear
+
+    layout: 
+      sequence: 30
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:31:&SESSION.::&DEBUG.:RP:::'
+        page: 31 # 100 Transactions Generated
+        clear-cache: RP
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Generate 100 transactions.  Click button to generate another 100 transactions.
+
+  - # ====== Entry: Reset Sample Data ============================
+    id: 38767953006307875133
+    label: 
+      label: Reset Sample Data
+
+    icon: 
+      image/icon-css-classes: fa-gear
+
+    layout: 
+      sequence: 1
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:40:&SESSION.::&DEBUG.::::'
+        page: 40 # Reset Sample Data
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Reset sales history to t-shirt sizes
+
+  - # ====== Entry: Remove Transaction History ===================
+    id: 38914074142072547900
+    label: 
+      label: Remove Transaction History
+
+    icon: 
+      image/icon-css-classes: fa-trash-o
+
+    layout: 
+      sequence: 300
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:26:&SESSION.::&DEBUG.::::'
+        page: 26 # Remove Transaction History
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Remove transaction history.
+
+- # ====== List: Transaction Reports ===========================
+  id: 38767980409823730690
+  identification: 
+    name: Transaction Reports
+
+  subscription: 
+    version-number: 37167692709710
+
+  source: 
+    type: Static Values
+
+  entries: 
+  - # ====== Entry: Transactions Log =============================
+    id: 38767980618427730690
+    label: 
+      label: Transactions Log
+
+    icon: 
+      image/icon-css-classes: fa-file-o
+
+    layout: 
+      sequence: 10
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:33:&SESSION.::&DEBUG.::::'
+        page: 33 # Transaction Log
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Report listing each call made to the transaction generator.
+      2.: reportIcon
+
+  - # ====== Entry: API Calls Per Minute =========================
+    id: 38768303727579142716
+    label: 
+      label: API Calls Per Minute
+
+    icon: 
+      image/icon-css-classes: fa-file-o
+
+    layout: 
+      sequence: 20
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:34:&SESSION.::&DEBUG.::::'
+        page: 34 # Transaction Summary by Minute
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Summary report of API calls summarized by minute.
+
+  - # ====== Entry: API Calls Per Hour ===========================
+    id: 38768306926325151853
+    label: 
+      label: API Calls Per Hour
+
+    icon: 
+      image/icon-css-classes: fa-file-o
+
+    layout: 
+      sequence: 30
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:35:&SESSION.::&DEBUG.:RP:::'
+        page: 35 # Transaction Summary by Hour
+        clear-cache: RP
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Summary report of API calls summarized by hour.
+      2.: reportIcon
+
+- # ====== List: reset sample data LIST ========================
+  id: 38780533820468371731
+  identification: 
+    name: reset sample data LIST
+
+  subscription: 
+    version-number: 37167692709710
+
+  source: 
+    type: Static Values
+
+  entries: 
+  - # ====== Entry: Reset Data to S ==============================
+    id: 38780534002895371734
+    label: 
+      label: Reset Data to S
+
+    icon: 
+      image/icon-css-classes: fa-cog
+
+    layout: 
+      sequence: 10
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: "javascript:$s('P40_SIZE','S');apex.submit({showWait:true});"
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Truncate existing sales history data and generate 500 rows of sales history
+
+  - # ====== Entry: Reset Data to M ==============================
+    id: 38780534328351371741
+    label: 
+      label: Reset Data to M
+
+    icon: 
+      image/icon-css-classes: fa-cog
+
+    layout: 
+      sequence: 20
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: "javascript:$s('P40_SIZE','M');apex.submit({showWait:true});"
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Truncate existing sales history data and generate 1,000 rows of sales history
+
+  - # ====== Entry: Reset Data to L ==============================
+    id: 38780534610220371741
+    label: 
+      label: Reset Data to L
+
+    icon: 
+      image/icon-css-classes: fa-cog
+
+    layout: 
+      sequence: 30
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: "javascript:$s('P40_SIZE','L');apex.submit({showWait:true});"
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Truncate existing sales history data and generate 5,000 rows of sales history
+
+  - # ====== Entry: Reset Data to XL =============================
+    id: 38780534900127371741
+    label: 
+      label: Reset Data to XL
+
+    icon: 
+      image/icon-css-classes: fa-cog
+
+    layout: 
+      sequence: 40
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: "javascript:$s('P40_SIZE','XL');apex.submit({showWait:true});"
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Truncate existing sales history data and generate 25,000 rows of sales history
+
+  - # ====== Entry: Reset Data to 2XL ============================
+    id: 38781099599236801952
+    label: 
+      label: Reset Data to 2XL
+
+    icon: 
+      image/icon-css-classes: fa-cog
+
+    layout: 
+      sequence: 50
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: "javascript:$s('P40_SIZE','XXL');apex.submit({showWait:true});"
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Truncate existing sales history data and generate 50,000 rows of sales history
+
+  - # ====== Entry: Reset Data to 3XL ============================
+    id: 39989946645945645327
+    label: 
+      label: Reset Data to 3XL
+
+    icon: 
+      image/icon-css-classes: fa-cog
+
+    layout: 
+      sequence: 60
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: "javascript:$s('P40_SIZE','XXXL');apex.submit({showWait:true});"
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Truncate existing sales history data and generate 100,000 rows of sales history
+
+  - # ====== Entry: Reset Data to 4XL ============================
+    id: 39989969359073661840
+    label: 
+      label: Reset Data to 4XL
+
+    icon: 
+      image/icon-css-classes: fa-cog
+
+    layout: 
+      sequence: 70
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: "javascript:$s('P40_SIZE','4XL');apex.submit({showWait:true});"
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Truncate existing sales history data and generate 1,000,000 rows of sales history
+
+  - # ====== Entry: Reset Data to 5XL ============================
+    id: 39990007102229633667
+    label: 
+      label: Reset Data to 5XL
+
+    icon: 
+      image/icon-css-classes: fa-cog
+
+    layout: 
+      sequence: 80
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: "javascript:$s('P40_SIZE','5XL');apex.submit({showWait:true});"
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Truncate existing sales history data and generate 5,000,000 rows of sales history
+
+- # ====== List: User Interface ================================
+  id: 41156008720527306074
+  identification: 
+    name: User Interface
+
+  subscription: 
+    version-number: 37167692709710
+
+  source: 
+    type: Static Values
+
+  configuration: 
+    build-option: 'Feature: Theme Style Selection' # 41156002532140306038
+
+  entries: 
+  - # ====== Entry: Theme Style Selection ========================
+    id: 41156009099689306076
+    label: 
+      label: Theme Style Selection
+
+    icon: 
+      image/icon-css-classes: fa-paint-brush
+
+    layout: 
+      sequence: 10
+
+    is-current: 
+      type: Target Page
+
+    link: 
+      target: 
+        url: 'f?p=&APP_ID.:10010:&APP_SESSION.::&DEBUG.:10010::'
+        page: 10010 # Theme Style Selection
+        clear-cache: 10010
+
+    click-counting: 
+      count-clicks: false
+
+    user-defined-attributes: 
+      translatable: false
+      1.: Set the default application look and feel
+

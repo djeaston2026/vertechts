@@ -1,0 +1,25 @@
+---
+- # ====== Supporting Object:  =================================
+  id: 38752441918337876737
+  prerequisites: 
+    free-space: 100
+    system-privileges: 
+    - CREATE PROCEDURE
+    - CREATE TABLE
+    - CREATE TRIGGER
+    - CREATE VIEW
+
+  installation: 
+    object-names: 
+    - OOW_DEMO_ITEMS
+    - OOW_DEMO_REGIONS
+    - OOW_DEMO_STORES
+    - OOW_DEMO_STORE_PRODUCTS
+    - OOW_DEMO_SALES_HISTORY
+    - OOW_DEMO_HIST_GEN_LOG
+    - OOW_DEMO_PREFERENCES
+    - OOW_DEMO_EVENT_LOG
+    - OOW_DEMO_SAMPLE_DATA
+    - OOW_DEMO_EVENT_PKG
+    - OOW_DEMO_SEQ
+

@@ -1,0 +1,38 @@
+---
+- # ====== Classic Navigation Bar Entry: Administration ========
+  id: 41304446204530863461
+  label: 
+    label: Administration
+
+  layout: 
+    sequence: 10
+
+  feedback: 
+    feedback-entry: false
+
+  link: 
+    target: 
+      url: 'f?p=&APP_ID.:settings:&SESSION.::&DEBUG.::::'
+      page: SETTINGS
+
+  server-side-condition: 
+    type: Never
+
+- # ====== Classic Navigation Bar Entry: Logout ================
+  id: 44377002364338086204
+  label: 
+    label: Logout
+
+  layout: 
+    sequence: 20
+
+  icon: 
+    height: 32
+    width: 32
+
+  feedback: 
+    feedback-entry: false
+
+  link: 
+    target: '&LOGOUT_URL.'
+

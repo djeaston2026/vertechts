@@ -1,0 +1,311 @@
+---
+# ====== Application: Brookstrut Sample App ==================
+id: 100
+identification: 
+  name: Brookstrut Sample App
+  alias: BROOKSTRUT
+  version: 24.2.1
+  application-group: Sample Applications # 4134881032175523464
+
+row-search: 
+  tokenize: false
+  text-query-function: None
+
+availability: 
+  status: Available with Developer Toolbar
+  build-status: Run and Build Application
+
+error-handling: 
+  default-display-location: Inline with Field and in Notification
+
+report-printing: 
+  type: Use Instance Settings
+
+advanced: 
+  friendly-urls: true
+  allow-feedback: false
+  logging: true
+  debugging: false
+  compatibility-mode: 24.2
+  accessible-read-only-items: false
+  pass-ecid: N
+  copyright-banner: |
+    Name: #APP_NAME#
+    Copyright (c) 2012, #YEAR# Oracle and/or its affiliates.
+    Licensed under the Universal Permissive License v 1.0
+    as shown at https://oss.oracle.com/licenses/upl/
+
+authentication: 
+  public-user: APEX_PUBLIC_USER
+  authentication-scheme: APEX Accounts # 44377002853020086206
+
+authorization: 
+  source-for-role-or-group-schemes: Authentication Scheme
+
+session-management: 
+  rejoin-sessions: Enabled for Public Sessions
+
+session-state-protection: 
+  enabled: true
+
+security: 
+  deep-linking: Enabled
+  browser-cache: Disabled
+  embed-in-frames: Deny
+  referrer-policy: strict-origin-when-cross-origin
+  html-escaping-mode: Extended
+  runtime-api-usage: 
+  - Modify This Application
+
+database-session: 
+  parsing-schema: DEMO1
+
+globalization: 
+  primary-language: English (en)
+  document-direction: Left-To-Right
+  language-derived-from: Application Primary Language
+  automatic-time-zone: false
+  automatic-csv-encoding: true
+
+character-value-comparison: 
+  behavior: Database session NLS setting (default)
+
+logo: 
+  type: Text
+  text: Brookstrut Sample App
+
+progressive-web-app: 
+  enable: true
+  installable: true
+  display: Standalone
+  screen-orientation: Any
+  ios-status-bar-style: Translucent
+  enable-push-notifications: false
+
+navigation: 
+  home-url: 
+    url: 'f?p=&APP_ID.:1:&SESSION.'
+    page: 1 # Home
+
+navigation-menu: 
+  list-template: Side Navigation Menu
+  template-options: 
+  - '#DEFAULT#'
+  - js-defaultCollapsed
+  - js-navCollapsed--hidden
+  - t-TreeNav--classic
+  list-position: Side
+  list: Navigation Menu # 37113776901885144853
+
+navigation-bar: 
+  implementation: List
+  list: Navigation Bar # 37114080571725239230
+  list-template: Navigation Bar
+
+javascript: 
+  include-deprecated-or-desupported-javascript-functions: 
+  - 18.x
+  include-jquery-migrate: true
+
+attributes: 
+  theme: Universal Theme # 42
+  enable-end-users-to-choose-theme-style: false
+  add-"built-with-apex"-to-footer: true
+  auto-dismiss-success-messages: false
+
+subscription: 
+  version-number: 37169915235816
+
+substitutions: 
+- # ====== Substitution: APP_NAME ==============================
+  id: 1
+  identification: 
+    name: APP_NAME
+
+  value: 
+    static-value: Brookstrut Sample App
+
+component-settings: 
+- # ====== Component Setting: NATIVE_BOSS ======================
+  id: 23908444517844549
+  identification: 
+    name: NATIVE_BOSS
+    type: REST Data Source
+
+  subscription: 
+    version-number: 187863462
+
+- # ====== Component Setting: NATIVE_OPEN_AI_ASSISTANT =========
+  id: 28178888882630453
+  identification: 
+    name: NATIVE_OPEN_AI_ASSISTANT
+    type: Dynamic Action
+
+  subscription: 
+    version-number: 37167692709710
+
+- # ====== Component Setting: NATIVE_SELECT_MANY ===============
+  id: 28179248117630453
+  identification: 
+    name: NATIVE_SELECT_MANY
+    type: Item
+
+  subscription: 
+    version-number: 37167692709710
+
+- # ====== Component Setting: NATIVE_GEOCODING =================
+  id: 28179672762630454
+  identification: 
+    name: NATIVE_GEOCODING
+    type: Process
+
+  settings: 
+    attribute-1: RELAX_HOUSE_NUMBER
+
+  subscription: 
+    version-number: 37167692709710
+
+- # ====== Component Setting: NATIVE_ADFBC =====================
+  id: 15019385231637717740
+  identification: 
+    name: NATIVE_ADFBC
+    type: REST Data Source
+
+  subscription: 
+    version-number: 40388824085962
+
+- # ====== Component Setting: NATIVE_IR ========================
+  id: 22501992474057642210
+  identification: 
+    name: NATIVE_IR
+    type: Region
+
+  subscription: 
+    version-number: 1
+
+- # ====== Component Setting: NATIVE_MAP_REGION ================
+  id: 22502646305240109948
+  identification: 
+    name: NATIVE_MAP_REGION
+    type: Region
+
+  subscription: 
+    version-number: 1
+
+- # ====== Component Setting: NATIVE_COLOR_PICKER ==============
+  id: 22505596448830643195
+  identification: 
+    name: NATIVE_COLOR_PICKER
+    type: Item
+
+  subscription: 
+    version-number: 1
+
+- # ====== Component Setting: NATIVE_DATE_PICKER_APEX ==========
+  id: 22507044542994244184
+  identification: 
+    name: NATIVE_DATE_PICKER_APEX
+    type: Item
+
+  subscription: 
+    version-number: 1
+
+- # ====== Component Setting: NATIVE_STAR_RATING ===============
+  id: 23253254239930457366
+  identification: 
+    name: NATIVE_STAR_RATING
+    type: Item
+
+  subscription: 
+    version-number: 1
+
+- # ====== Component Setting: NATIVE_SINGLE_CHECKBOX ===========
+  id: 23253254308740457366
+  identification: 
+    name: NATIVE_SINGLE_CHECKBOX
+    type: Item
+
+  subscription: 
+    version-number: 1
+
+- # ====== Component Setting: NATIVE_GEOCODED_ADDRESS ==========
+  id: 23489335926436493757
+  identification: 
+    name: NATIVE_GEOCODED_ADDRESS
+    type: Item
+
+  subscription: 
+    version-number: 1
+
+- # ====== Component Setting: PLUGIN_COM.ORACLE.APEX.D3.BUBBLE =
+  id: 35557618340279657878
+  identification: 
+    name: PLUGIN_COM.ORACLE.APEX.D3.BUBBLE
+    type: Region
+
+  subscription: 
+    version-number: 1
+
+- # ====== Component Setting: PLUGIN_COM.ORACLE.APEX.D3.LINE ===
+  id: 35557840115691662632
+  identification: 
+    name: PLUGIN_COM.ORACLE.APEX.D3.LINE
+    type: Region
+
+  subscription: 
+    version-number: 1
+
+- # ====== Component Setting: PLUGIN_COM.ORACLE.APEX.D3.TREEMAP 
+  id: 35558082327569696919
+  identification: 
+    name: PLUGIN_COM.ORACLE.APEX.D3.TREEMAP
+    type: Region
+
+  subscription: 
+    version-number: 1
+
+- # ====== Component Setting: NATIVE_YES_NO ====================
+  id: 36597089530221798787
+  identification: 
+    name: NATIVE_YES_NO
+    type: Item
+
+  subscription: 
+    version-number: 1
+
+- # ====== Component Setting: NATIVE_DISPLAY_SELECTOR ==========
+  id: 37165635741499927628
+  identification: 
+    name: NATIVE_DISPLAY_SELECTOR
+    type: Region
+
+  subscription: 
+    version-number: 1
+
+- # ====== Component Setting: PLUGIN_COM.ORACLE.APEX.D3.BARCHART
+  id: 37748640282176416647
+  identification: 
+    name: PLUGIN_COM.ORACLE.APEX.D3.BARCHART51253
+    type: Region
+
+  subscription: 
+    version-number: 1
+
+- # ====== Component Setting: PLUGIN_COM.ORACLE.APEX.D3.BUBBLE.T
+  id: 37773726593616374770
+  identification: 
+    name: PLUGIN_COM.ORACLE.APEX.D3.BUBBLE.TEST
+    type: Region
+
+  subscription: 
+    version-number: 1
+
+- # ====== Component Setting: PLUGIN_COM.ORACLE.APEX.D3.TREEMAP4
+  id: 37773906516749472282
+  identification: 
+    name: PLUGIN_COM.ORACLE.APEX.D3.TREEMAP48914
+    type: Region
+
+  subscription: 
+    version-number: 1
+

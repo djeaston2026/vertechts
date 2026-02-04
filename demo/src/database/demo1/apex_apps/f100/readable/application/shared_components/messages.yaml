@@ -1,0 +1,181 @@
+---
+- # ====== Text Message: N_DAY =================================
+  id: 36625677727563520684
+  identification: 
+    name: N_DAY
+
+  message: 
+    text: '%0 day'
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 1
+
+- # ====== Text Message: N_DAYS ================================
+  id: 36625677925838521523
+  identification: 
+    name: N_DAYS
+
+  message: 
+    text: '%0 days'
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 1
+
+- # ====== Text Message: N_HOUR ================================
+  id: 36625678122818522936
+  identification: 
+    name: N_HOUR
+
+  message: 
+    text: '%0 hour'
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 1
+
+- # ====== Text Message: N_HOURS ===============================
+  id: 36625678320015524162
+  identification: 
+    name: N_HOURS
+
+  message: 
+    text: '%0 hours'
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 1
+
+- # ====== Text Message: N_MINUTES =============================
+  id: 36625678516780525722
+  identification: 
+    name: N_MINUTES
+
+  message: 
+    text: '%0 minutes'
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 1
+
+- # ====== Text Message: N_WEEK ================================
+  id: 36625678714192526865
+  identification: 
+    name: N_WEEK
+
+  message: 
+    text: '%0 week'
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 1
+
+- # ====== Text Message: N_WEEKS ===============================
+  id: 36625678910957528432
+  identification: 
+    name: N_WEEKS
+
+  message: 
+    text: '%0 weeks'
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 1
+
+- # ====== Text Message: HELP_SIDEBAR ==========================
+  id: 37296602406953455609
+  identification: 
+    name: HELP_SIDEBAR
+
+  message: 
+    text: <h1 class="appNameHeader"> <img src="%0f_spacer.gif" class="appIcon %1" alt="" /> %2 </h1> <ul class="vapList"> <li> <span class="vLabel">App Version</span> <span class="vValue">%3</span> </li> <li> <span class="vLabel">Pages</span> <span class="vValue">%4</span> </li> <li> <span class="vLabel">Vendor</span> <span class="vValue">%5 </span> </li> </ul>
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 1
+
+- # ====== Text Message: ADMINISTRATION ========================
+  id: 40653569926513718776
+  identification: 
+    name: ADMINISTRATION
+
+  message: 
+    text: Administration
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 1
+
+- # ====== Text Message: HELP ==================================
+  id: 40653574028245719318
+  identification: 
+    name: HELP
+
+  message: 
+    text: Help
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 1
+
+- # ====== Text Message: LOGOUT ================================
+  id: 40653578131015720058
+  identification: 
+    name: LOGOUT
+
+  message: 
+    text: Logout
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 1
+
+- # ====== Text Message: USER ==================================
+  id: 40781300812684493157
+  identification: 
+    name: USER
+
+  message: 
+    text: User
+
+  attributes: 
+    language: English (en)
+    used-in-javascript: false
+
+  subscription: 
+    version-number: 1
+

@@ -1,0 +1,1190 @@
+---
+# ====== Page: Sales History Content Row =====================
+id: 2
+identification: 
+  name: Sales History Content Row
+  alias: SALES-HISTORY-CONTENT-ROW
+  title: Sales History Content Row
+  page-group: Reporting # 39732641972777162923
+
+appearance: 
+  page-mode: Normal
+  page-template: Left Side Column
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: Do not focus cursor
+  warn-on-unsaved-changes: false
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Unrestricted
+  form-auto-complete: On
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Always
+
+server-cache: 
+  caching: Disabled
+
+help: 
+  help-text: This page shows sales history with a faceted content row based report.
+
+regions: 
+- # ====== Region: Timer =======================================
+  id: 13205440287638396509
+  identification: 
+    name: Timer
+    type: Dynamic Content
+
+  source: 
+    language: PL/SQL
+    pl/sql-function-body-returning-a-clob: |
+      declare
+         x clob;
+      begin
+          x := to_char(oow_demo_timing.get_elap,'99G9990D000')||' seconds';
+          return x;
+      end;
+
+  layout: 
+    sequence: 30
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes (No Grid)
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-cache: 
+    caching: Disabled
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    performance: 
+      lazy-loading: false
+
+- # ====== Region: Sales History ===============================
+  id: 50709643473582334767
+  identification: 
+    name: Sales History
+    type: Content Row
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select
+          h.ID            id,
+          r.REGION_NAME   region,
+          s.store_name    store,
+          i.item_Name     product,
+          h.DATE_OF_SALE,
+          to_char(h.DATE_OF_SALE,'YYYY.MM') the_month,
+          h.QUANTITY,
+          h.TRANSACTION_ID,
+          h.ITEM_PRICE,
+          h.QUANTITY * h.ITEM_PRICE sale,
+          i.id product_id,
+          s.id store_id
+      from #OWNER#.OOW_DEMO_SALES_HISTORY h,
+           #OWNER#.OOW_DEMO_REGIONS r,
+           #OWNER#.OOW_DEMO_STORES s,
+           #OWNER#.OOW_DEMO_STORE_PRODUCTS p,
+           #OWNER#.OOW_DEMO_ITEMS i
+      where s.region_id = r.id and
+            h.store_id = s.id and
+            p.ITEM_ID = h.PRODUCT_ID and
+            p.item_id = i.id
+      
+
+  order-by: 
+    type: None
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes (No Grid)
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Region
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      display: Multiple (Report)
+
+    settings: 
+      title: '&PRODUCT.'
+      description: |
+        Location: &REGION.: &STORE.<br>
+        Date: &DATE_OF_SALE. <br>
+        Transaction: &TRANSACTION_ID.
+      miscellaneous: |
+        Price: &ITEM_PRICE. <br>
+        Quantity: &QUANTITY. 
+      display-avatar: true
+      display-badge: true
+
+    avatar: 
+      type: Icon
+      icon: fa-tag
+      shape: Rounded
+      size: Default
+
+    badge: 
+      label: Sale
+      value: SALE
+      display-label: false
+      style: Default
+      shape: Default
+      size: Default
+      column-width: Medium
+      position: START
+      alignment: START
+
+    appearance: 
+      apply-theme-colors: true
+      style: Default
+      hide-borders: false
+      remove-padding: false
+
+    row-selection: 
+      type: None
+
+    performance: 
+      lazy-loading: false
+
+    pagination: 
+      type: Page
+      entities-per-page: 100
+      show-total-count: false
+
+  columns: 
+  - # ====== Column: ID ==========================================
+    id: 13205438468299396491
+    identification: 
+      name: ID
+
+    layout: 
+      sequence: 10
+
+    source: 
+      type: Database Column
+      database-column: ID
+      data-type: NUMBER
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      group: false
+
+  - # ====== Column: REGION ======================================
+    id: 13205438583805396492
+    identification: 
+      name: REGION
+
+    layout: 
+      sequence: 20
+
+    source: 
+      type: Database Column
+      database-column: REGION
+      data-type: VARCHAR2
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      group: false
+
+  - # ====== Column: STORE =======================================
+    id: 13205438688983396493
+    identification: 
+      name: STORE
+
+    layout: 
+      sequence: 30
+
+    source: 
+      type: Database Column
+      database-column: STORE
+      data-type: VARCHAR2
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      group: false
+
+  - # ====== Column: PRODUCT =====================================
+    id: 13205438713026396494
+    identification: 
+      name: PRODUCT
+
+    layout: 
+      sequence: 40
+
+    source: 
+      type: Database Column
+      database-column: PRODUCT
+      data-type: VARCHAR2
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      group: false
+
+  - # ====== Column: DATE_OF_SALE ================================
+    id: 13205438897739396495
+    identification: 
+      name: DATE_OF_SALE
+
+    layout: 
+      sequence: 50
+
+    source: 
+      type: Database Column
+      database-column: DATE_OF_SALE
+      data-type: TIMESTAMP WITH LOCAL TIME ZONE
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: 'DD-MON-YYYY HH24:MI:SS'
+      group: false
+
+  - # ====== Column: THE_MONTH ===================================
+    id: 13205438964181396496
+    identification: 
+      name: THE_MONTH
+
+    layout: 
+      sequence: 60
+
+    source: 
+      type: Database Column
+      database-column: THE_MONTH
+      data-type: VARCHAR2
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      group: false
+
+  - # ====== Column: QUANTITY ====================================
+    id: 13205439012734396497
+    identification: 
+      name: QUANTITY
+
+    layout: 
+      sequence: 70
+
+    source: 
+      type: Database Column
+      database-column: QUANTITY
+      data-type: NUMBER
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      group: false
+
+  - # ====== Column: TRANSACTION_ID ==============================
+    id: 13205439206468396498
+    identification: 
+      name: TRANSACTION_ID
+
+    layout: 
+      sequence: 80
+
+    source: 
+      type: Database Column
+      database-column: TRANSACTION_ID
+      data-type: VARCHAR2
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      group: false
+
+  - # ====== Column: ITEM_PRICE ==================================
+    id: 13205439228751396499
+    identification: 
+      name: ITEM_PRICE
+
+    layout: 
+      sequence: 90
+
+    source: 
+      type: Database Column
+      database-column: ITEM_PRICE
+      data-type: NUMBER
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: FML999G999G999G999G990D00
+      group: false
+
+  - # ====== Column: SALE ========================================
+    id: 13205439317647396500
+    identification: 
+      name: SALE
+
+    layout: 
+      sequence: 100
+
+    source: 
+      type: Database Column
+      database-column: SALE
+      data-type: NUMBER
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: FML999G999G999G999G990D00
+      group: false
+
+  - # ====== Column: PRODUCT_ID ==================================
+    id: 13909445761850192596
+    identification: 
+      name: PRODUCT_ID
+
+    layout: 
+      sequence: 110
+
+    source: 
+      type: Database Column
+      database-column: PRODUCT_ID
+      data-type: NUMBER
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      group: false
+
+  - # ====== Column: STORE_ID ====================================
+    id: 13909445829725192597
+    identification: 
+      name: STORE_ID
+
+    layout: 
+      sequence: 120
+
+    source: 
+      type: Database Column
+      database-column: STORE_ID
+      data-type: NUMBER
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      group: false
+
+  actions: 
+  - # ====== Action: Full Row Link ===============================
+    id: 13205439816719396505
+    identification: 
+      position: Full Row Link # 349402277895478545
+
+    layout: 
+      sequence: 10
+
+    link: 
+      type: Redirect to Page in this Application
+      target: 
+        url: 'f?p=&APP_ID.:36:&SESSION.::&DEBUG.:RP,36:P36_TRANSACTION_ENTRY_ID:&ID.'
+        page: 36 # Transaction Detail
+        clear-cache: RP,36
+        values: 
+          p36_transaction_entry_id: '&ID.'
+
+- # ====== Region: Breadcrumb ==================================
+  id: 50709678108799344412
+  identification: 
+    name: Breadcrumb
+    type: Breadcrumb
+
+  source: 
+    breadcrumb: ' Breadcrumb' # 44377004153871086216
+
+  layout: 
+    sequence: 30
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Title Bar
+    template-options: 
+    - '#DEFAULT#'
+    - t-BreadcrumbRegion--useBreadcrumbTitle
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      breadcrumb-template: Breadcrumb
+      template-options: 
+      - '#DEFAULT#'
+
+- # ====== Region: Facets ======================================
+  id: 50951392381917669782
+  identification: 
+    name: Facets
+    type: Static Content
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes (No Grid)
+    template-options: 
+    - '#DEFAULT#'
+    - margin-bottom-md
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    static-id: active_facets
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Facets ======================================
+  id: 50968077236826426208
+  identification: 
+    name: Facets
+    type: Faceted Search
+
+  source: 
+    filtered-region: Sales History # 50709643473582334767
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: REGION_POSITION_02
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: true
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      batch-facet-changes: false
+      compact-numbers-threshold: 10000
+      show-current-facets: Selector
+      current-facets-selector: '#active_facets'
+      show-total-row-count: No
+      show-charts: Dialog
+      display-chart-for-top-n-values: 10
+
+  facets: 
+  - # ====== Facet: P2_SEARCH ====================================
+    id: 50968084381370426226
+    identification: 
+      name: P2_SEARCH
+      type: Search
+
+    label: 
+      label: Search
+
+    settings: 
+      search-type: Row Search
+      input-field: Top of Faceted Search Region
+
+    layout: 
+      sequence: 10
+
+    security: 
+      store-value-encrypted-in-session-state: true
+
+  - # ====== Facet: P2_REGION ====================================
+    id: 50968084520237426227
+    identification: 
+      name: P2_REGION
+      type: Checkbox Group
+
+    label: 
+      label: Region
+      show-label-for-current-facet: true
+
+    layout: 
+      sequence: 20
+
+    appearance: 
+      display: Inline
+
+    list-of-values: 
+      type: Distinct Values
+      sort-direction: Ascending
+      include-null-option: false
+
+    list-entries: 
+      compute-counts: true
+      show-counts: true
+      zero-count-entries: Hide
+      sort-by-top-counts: true
+      show-selected-first: false
+      maximum-displayed-entries: 7
+      display-filter-initially: false
+
+    actions-menu: 
+      filter: true
+      chart: true
+
+    advanced: 
+      show-chart-initially: false
+      collapsible: false
+
+    source: 
+      database-column: REGION
+      data-type: VARCHAR2
+
+    multiple-values: 
+      type: No
+
+    security: 
+      store-value-encrypted-in-session-state: true
+      escape-special-characters: true
+
+  - # ====== Facet: P2_STORE =====================================
+    id: 50968084617002426228
+    identification: 
+      name: P2_STORE
+      type: Checkbox Group
+
+    label: 
+      label: Store
+      show-label-for-current-facet: true
+
+    layout: 
+      sequence: 30
+
+    appearance: 
+      display: Inline
+
+    list-of-values: 
+      type: Distinct Values
+      sort-direction: Ascending
+      include-null-option: false
+
+    list-entries: 
+      compute-counts: true
+      show-counts: true
+      zero-count-entries: Hide
+      sort-by-top-counts: true
+      show-selected-first: false
+      maximum-displayed-entries: 7
+      display-filter-initially: false
+
+    actions-menu: 
+      filter: true
+      chart: true
+
+    advanced: 
+      show-chart-initially: false
+      collapsible: false
+
+    source: 
+      database-column: STORE
+      data-type: VARCHAR2
+
+    multiple-values: 
+      type: No
+
+    security: 
+      store-value-encrypted-in-session-state: true
+      escape-special-characters: true
+
+  - # ====== Facet: P2_PRODUCT ===================================
+    id: 50968084687402426229
+    identification: 
+      name: P2_PRODUCT
+      type: Checkbox Group
+
+    label: 
+      label: Product
+      show-label-for-current-facet: true
+
+    layout: 
+      sequence: 40
+
+    appearance: 
+      display: Inline
+
+    list-of-values: 
+      type: Distinct Values
+      sort-direction: Ascending
+      include-null-option: false
+
+    list-entries: 
+      compute-counts: true
+      show-counts: true
+      zero-count-entries: Hide
+      sort-by-top-counts: true
+      show-selected-first: false
+      maximum-displayed-entries: 7
+      display-filter-initially: false
+
+    actions-menu: 
+      filter: true
+      chart: true
+
+    advanced: 
+      show-chart-initially: false
+      collapsible: false
+
+    source: 
+      database-column: PRODUCT
+      data-type: VARCHAR2
+
+    multiple-values: 
+      type: No
+
+    security: 
+      store-value-encrypted-in-session-state: true
+      escape-special-characters: true
+
+  - # ====== Facet: P2_THE_MONTH =================================
+    id: 50968084858648426231
+    identification: 
+      name: P2_THE_MONTH
+      type: Checkbox Group
+
+    label: 
+      label: Month
+      show-label-for-current-facet: true
+
+    layout: 
+      sequence: 50
+
+    appearance: 
+      display: Inline
+
+    list-of-values: 
+      type: Distinct Values
+      sort-direction: Ascending
+      include-null-option: false
+
+    list-entries: 
+      compute-counts: true
+      show-counts: true
+      zero-count-entries: Hide
+      sort-by-top-counts: false
+      show-selected-first: false
+      maximum-displayed-entries: 7
+      display-filter-initially: false
+
+    actions-menu: 
+      filter: true
+      chart: true
+
+    advanced: 
+      show-chart-initially: false
+      collapsible: false
+
+    source: 
+      database-column: THE_MONTH
+      data-type: VARCHAR2
+
+    multiple-values: 
+      type: No
+
+    security: 
+      store-value-encrypted-in-session-state: true
+      escape-special-characters: true
+
+  filters: 
+  - # ====== Filter: P2_SEARCH ===================================
+    id: 50968084381370426226
+    identification: 
+      name: P2_SEARCH
+      type: Search
+
+    label: 
+      label: Search
+
+    settings: 
+      search-type: Row Search
+      collapsed-search-field: false
+
+    layout: 
+      sequence: 10
+
+    security: 
+      store-value-encrypted-in-session-state: true
+
+  - # ====== Filter: P2_REGION ===================================
+    id: 50968084520237426227
+    identification: 
+      name: P2_REGION
+      type: Checkbox Group
+
+    label: 
+      label: Region
+
+    layout: 
+      sequence: 20
+
+    list-of-values: 
+      type: Distinct Values
+      sort-direction: Ascending
+      include-null-option: false
+
+    list-entries: 
+      compute-counts: true
+      show-counts: true
+      zero-count-entries: Hide
+      sort-by-top-counts: true
+      show-selected-first: false
+      client-side-filtering: false
+
+    suggestions: 
+      type: None
+
+    source: 
+      database-column: REGION
+      data-type: VARCHAR2
+
+    multiple-values: 
+      type: No
+
+    security: 
+      store-value-encrypted-in-session-state: true
+      escape-special-characters: true
+
+  - # ====== Filter: P2_STORE ====================================
+    id: 50968084617002426228
+    identification: 
+      name: P2_STORE
+      type: Checkbox Group
+
+    label: 
+      label: Store
+
+    layout: 
+      sequence: 30
+
+    list-of-values: 
+      type: Distinct Values
+      sort-direction: Ascending
+      include-null-option: false
+
+    list-entries: 
+      compute-counts: true
+      show-counts: true
+      zero-count-entries: Hide
+      sort-by-top-counts: true
+      show-selected-first: false
+      client-side-filtering: false
+
+    suggestions: 
+      type: None
+
+    source: 
+      database-column: STORE
+      data-type: VARCHAR2
+
+    multiple-values: 
+      type: No
+
+    security: 
+      store-value-encrypted-in-session-state: true
+      escape-special-characters: true
+
+  - # ====== Filter: P2_PRODUCT ==================================
+    id: 50968084687402426229
+    identification: 
+      name: P2_PRODUCT
+      type: Checkbox Group
+
+    label: 
+      label: Product
+
+    layout: 
+      sequence: 40
+
+    list-of-values: 
+      type: Distinct Values
+      sort-direction: Ascending
+      include-null-option: false
+
+    list-entries: 
+      compute-counts: true
+      show-counts: true
+      zero-count-entries: Hide
+      sort-by-top-counts: true
+      show-selected-first: false
+      client-side-filtering: false
+
+    suggestions: 
+      type: None
+
+    source: 
+      database-column: PRODUCT
+      data-type: VARCHAR2
+
+    multiple-values: 
+      type: No
+
+    security: 
+      store-value-encrypted-in-session-state: true
+      escape-special-characters: true
+
+  - # ====== Filter: P2_THE_MONTH ================================
+    id: 50968084858648426231
+    identification: 
+      name: P2_THE_MONTH
+      type: Checkbox Group
+
+    label: 
+      label: Month
+
+    layout: 
+      sequence: 50
+
+    list-of-values: 
+      type: Distinct Values
+      sort-direction: Ascending
+      include-null-option: false
+
+    list-entries: 
+      compute-counts: true
+      show-counts: true
+      zero-count-entries: Hide
+      sort-by-top-counts: false
+      show-selected-first: false
+      client-side-filtering: false
+
+    suggestions: 
+      type: None
+
+    source: 
+      database-column: THE_MONTH
+      data-type: VARCHAR2
+
+    multiple-values: 
+      type: No
+
+    security: 
+      store-value-encrypted-in-session-state: true
+      escape-special-characters: true
+
+page-items: 
+- # ====== Page Item: P2_NAVIGATION ============================
+  id: 13910683452932941599
+  identification: 
+    name: P2_NAVIGATION
+    type: Select List
+
+  label: 
+    label: Navigation
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 10
+    region: Breadcrumb # 50709678108799344412
+    slot: NEXT
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Hidden
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: SALES HISTORY NAVIGATION # 13911312384249143736
+    display-extra-values: true
+    display-null-value: false
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  default: 
+    type: Static
+    static-value: '&APP_PAGE_ID.'
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: true
+    restricted-characters: All characters can be saved.
+
+buttons: 
+- # ====== Button: reset =======================================
+  id: 13852438521623569920
+  identification: 
+    button-name: reset
+    label: Reset
+
+  layout: 
+    sequence: 30
+    region: Breadcrumb # 50709678108799344412
+    slot: NEXT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--noUI
+    - t-Button--iconLeft
+    icon: fa-undo
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:2:&SESSION.::&DEBUG.:RP,2::'
+      page: 2 # Sales History Content Row
+      clear-cache: RP,2
+
+    warn-on-unsaved-changes: Do Not Check
+
+- # ====== Button: up ==========================================
+  id: 13852438965906569921
+  identification: 
+    button-name: up
+    label: Up
+
+  layout: 
+    sequence: 10
+    region: Breadcrumb # 50709678108799344412
+    slot: UP
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--noUI
+    icon: fa-arrow-up
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:1:&SESSION.::&DEBUG.:::'
+      page: 1 # Home
+
+    warn-on-unsaved-changes: Do Not Check
+
+dynamic-actions: 
+- # ====== Dynamic Action: on navigation click =================
+  id: 13909443348563192572
+  identification: 
+    name: on navigation click
+
+  execution: 
+    sequence: 10
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Change
+    selection-type: Item(s)
+    item(s): 
+    - P2_NAVIGATION
+
+  actions: 
+  - # ====== Action: Submit Page =================================
+    id: 13909443435082192573
+    identification: 
+      action: Submit Page
+
+    settings: 
+      show-processing: true
+
+    execution: 
+      sequence: 10
+      event: on navigation click # 13909443348563192572
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+processes: 
+- # ====== Process: Start Timer ================================
+  id: 13205440402634396510
+  identification: 
+    name: Start Timer
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: oow_demo_timing.start_timer;
+
+  execution: 
+    sequence: 10
+    point: Before Header
+    run-process: Once Per Page Visit (default)
+
+branches: 
+- # ====== Branch: branch to requested page ====================
+  id: 13910559155788510578
+  identification: 
+    name: branch to requested page
+
+  execution: 
+    sequence: 40
+    point: After Processing
+
+  behavior: 
+    type: Page or URL (Redirect)
+    target: 
+      url: 'f?p=&APP_ID.:&P2_NAVIGATION.:&SESSION.::&DEBUG.:RP,&P2_NAVIGATION.::&success_msg=#SUCCESS_MSG#'
+      page: '&P2_NAVIGATION.'
+      clear-cache: RP,&P2_NAVIGATION.
+

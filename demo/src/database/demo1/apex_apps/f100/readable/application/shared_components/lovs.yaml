@@ -1,0 +1,589 @@
+---
+- # ====== List of Values: SALES HISTORY NAVIGATION ============
+  id: 13911312384249143736
+  identification: 
+    name: SALES HISTORY NAVIGATION
+
+  subscription: 
+    version-number: 37167692709758
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: Faceted Classic Report =======================
+    id: 13911312625554143738
+    entry: 
+      sequence: 27
+      display: Faceted Classic Report
+      return: 13
+
+  - # ====== Entry: Classic Report ===============================
+    id: 13911313069051143739
+    entry: 
+      sequence: 10
+      display: Classic Report
+      return: 50
+
+  - # ====== Entry: Faceted Content Row ==========================
+    id: 13911313414111143739
+    entry: 
+      sequence: 30
+      display: Faceted Content Row
+      return: 2
+
+  - # ====== Entry: Faceted Content Row with Menus ===============
+    id: 13911313813046143740
+    entry: 
+      sequence: 40
+      display: Faceted Content Row with Menus
+      return: 38
+
+  - # ====== Entry: Interactive Report ===========================
+    id: 13911314235442143740
+    entry: 
+      sequence: 20
+      display: Interactive Report
+      return: 51
+
+  - # ====== Entry: Smart Search Content Row with Menu ===========
+    id: 13911819498075328280
+    entry: 
+      sequence: 60
+      display: Smart Search Content Row with Menu
+      return: 45
+
+  - # ====== Entry: Smart Search with Classic Cards ==============
+    id: 13912343321021448422
+    entry: 
+      sequence: 50
+      display: Smart Search with Classic Cards
+      return: 46
+
+  - # ====== Entry: Interactive Grid =============================
+    id: 14235070504197459329
+    entry: 
+      sequence: 25
+      display: Interactive Grid
+      return: 23
+
+  - # ====== Entry: Faceted Calendar =============================
+    id: 14236065173834958118
+    entry: 
+      sequence: 28
+      display: Faceted Calendar
+      return: 42
+
+- # ====== List of Values: OOW_DEMO_STORES.STORE_NAME ==========
+  id: 27712966855314747382
+  identification: 
+    name: OOW_DEMO_STORES.STORE_NAME
+
+  subscription: 
+    version-number: 37167692709758
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: OOW_DEMO_STORES
+
+  column-mapping: 
+    return: ID
+    display: STORE_NAME
+    default-sort: STORE_NAME
+    sort-direction: Ascending (Nulls Last)
+
+- # ====== List of Values: OOW_DEMO_ITEMS.TYPE =================
+  id: 27712967074281747384
+  identification: 
+    name: OOW_DEMO_ITEMS.TYPE
+
+  subscription: 
+    version-number: 37167692709758
+
+  source: 
+    location: Local Database
+    type: Table / View
+    table-owner: Parsing Schema
+    table-name: OOW_DEMO_ITEMS
+
+  column-mapping: 
+    return: ID
+    display: TYPE
+    default-sort: TYPE
+    sort-direction: Ascending (Nulls Last)
+
+- # ====== List of Values: FOOD TYPES ==========================
+  id: 36665755913439831350
+  identification: 
+    name: FOOD TYPES
+
+  subscription: 
+    version-number: 37167692709758
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: Snacks =======================================
+    id: 13878788627408794590
+    entry: 
+      sequence: 50
+      display: Snacks
+      return: Snacks
+
+  - # ====== Entry: Food =========================================
+    id: 36665756118461831354
+    entry: 
+      sequence: 10
+      display: Food
+      return: Food
+
+  - # ====== Entry: Drink ========================================
+    id: 36665756400324831357
+    entry: 
+      sequence: 20
+      display: Drink
+      return: Drink
+
+  - # ====== Entry: Soap =========================================
+    id: 36665756728675831358
+    entry: 
+      sequence: 30
+      display: Soap
+      return: Soap
+
+  - # ====== Entry: Miscellaneous ================================
+    id: 36665757024611831358
+    entry: 
+      sequence: 40
+      display: Miscellaneous
+      return: Miscellaneous
+
+- # ====== List of Values: POPULARITY VIEW OPTIONS P2 ==========
+  id: 37296051434239946119
+  identification: 
+    name: POPULARITY VIEW OPTIONS P2
+
+  subscription: 
+    version-number: 37167692709758
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: Bubbles ======================================
+    id: 37296051779248946122
+    entry: 
+      sequence: 1
+      display: Bubbles
+      return: B
+
+  - # ====== Entry: Interactive Report ===========================
+    id: 37296052102101946124
+    entry: 
+      sequence: 2
+      display: Interactive Report
+      return: IR
+
+  - # ====== Entry: Treemap ======================================
+    id: 37296052514242946124
+    entry: 
+      sequence: 3
+      display: Treemap
+      return: T
+
+- # ====== List of Values: STORETYPE ===========================
+  id: 38747937713710683414
+  identification: 
+    name: STORETYPE
+
+  subscription: 
+    version-number: 37167692709758
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: Branch =======================================
+    id: 38747938004863683415
+    entry: 
+      sequence: 1
+      display: Branch
+      return: Branch
+
+  - # ====== Entry: Flagship =====================================
+    id: 38747938202184683415
+    entry: 
+      sequence: 2
+      display: Flagship
+      return: Flagship
+
+- # ====== List of Values: STORES ==============================
+  id: 38748055722717961760
+  identification: 
+    name: STORES
+
+  subscription: 
+    version-number: 37167692709758
+
+  source: 
+    location: Local Database
+    type: Legacy SQL Query
+    sql-query: |
+      select STORE_NAME d, ID r
+      from   OOW_DEMO_stores
+      order by 1
+
+- # ====== List of Values: ITEMS ===============================
+  id: 38748055900123974204
+  identification: 
+    name: ITEMS
+
+  subscription: 
+    version-number: 37167692709758
+
+  source: 
+    location: Local Database
+    type: Legacy SQL Query
+    sql-query: |
+      select item_name d, id r
+      from   OOW_DEMO_items 
+      order by 1
+
+- # ====== List of Values: REGIONS =============================
+  id: 38748850411183507519
+  identification: 
+    name: REGIONS
+
+  subscription: 
+    version-number: 37167692709758
+
+  source: 
+    location: Local Database
+    type: Legacy SQL Query
+    sql-query: |
+      select region_name, id 
+      from OOW_DEMO_REGIONS 
+      order by 1
+
+- # ====== List of Values: STORE TYPE ==========================
+  id: 38748855630557711795
+  identification: 
+    name: STORE TYPE
+
+  subscription: 
+    version-number: 37167692709758
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: Flagship =====================================
+    id: 38748855808123711795
+    entry: 
+      sequence: 10
+      display: Flagship
+      return: Flagship
+
+  - # ====== Entry: Branch =======================================
+    id: 38748856020945711798
+    entry: 
+      sequence: 20
+      display: Branch
+      return: Branch
+
+- # ====== List of Values: PRODUCT_TYPES =======================
+  id: 38751529808130248726
+  identification: 
+    name: PRODUCT_TYPES
+
+  subscription: 
+    version-number: 37167692709758
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: Drink ========================================
+    id: 38751530105233248730
+    entry: 
+      sequence: 1
+      display: Drink
+      return: Drink
+
+  - # ====== Entry: Food =========================================
+    id: 38751530317296248730
+    entry: 
+      sequence: 2
+      display: Food
+      return: Food
+
+  - # ====== Entry: Miscellaneous ================================
+    id: 38751530521538248730
+    entry: 
+      sequence: 3
+      display: Miscellaneous
+      return: Miscellaneous
+
+  - # ====== Entry: Soap =========================================
+    id: 38751530713086248730
+    entry: 
+      sequence: 4
+      display: Soap
+      return: Soap
+
+- # ====== List of Values: TIMEFRAME (2 WEEKS) =================
+  id: 38751551614981413992
+  identification: 
+    name: TIMEFRAME (2 WEEKS)
+
+  subscription: 
+    version-number: 37167692709758
+
+  source: 
+    location: Local Database
+    type: Legacy SQL Query
+    sql-query: |
+      select wwv_flow_lang.system_message('N_MINUTES','15') d, 
+      trim(to_char(15/(24*60),'00000.99999999999','NLS_NUMERIC_CHARACTERS=''.,''')) t from dual
+      union all 
+      select wwv_flow_lang.system_message('N_MINUTES','30') d, 
+      trim(to_char(30/(24*60),'00000.99999999999','NLS_NUMERIC_CHARACTERS=''.,''')) t from dual
+      union all 
+      select wwv_flow_lang.system_message('N_HOUR','1') d, 
+      trim(to_char(1/24,'00000.99999999999','NLS_NUMERIC_CHARACTERS=''.,''')) t from dual
+      union all 
+      select wwv_flow_lang.system_message('N_MINUTES','90') d, 
+      trim(to_char(90/(24*60),'00000.99999999999','NLS_NUMERIC_CHARACTERS=''.,''')) t from dual
+      union all 
+      select wwv_flow_lang.system_message('N_HOURS','2') d, 
+      trim(to_char(1/12,'00000.99999999999','NLS_NUMERIC_CHARACTERS=''.,'''))  t from dual
+      union all 
+      select wwv_flow_lang.system_message('N_HOURS','3') d, 
+      trim(to_char(3/24,'00000.99999999999','NLS_NUMERIC_CHARACTERS=''.,'''))  t from dual
+      union all 
+      select wwv_flow_lang.system_message('N_HOURS','4') d, 
+      trim(to_char(4/24,'00000.99999999999','NLS_NUMERIC_CHARACTERS=''.,'''))  t from dual
+      union all 
+      select wwv_flow_lang.system_message('N_HOURS','5') d, 
+      trim(to_char(5/24,'00000.99999999999','NLS_NUMERIC_CHARACTERS=''.,'''))  t from dual
+      union all 
+      select wwv_flow_lang.system_message('N_HOURS','6') d, 
+      trim(to_char(6/24,'00000.99999999999','NLS_NUMERIC_CHARACTERS=''.,''')) t from dual
+      union all 
+      select wwv_flow_lang.system_message('N_HOURS','8') d, 
+      trim(to_char(8/24,'00000.99999999999','NLS_NUMERIC_CHARACTERS=''.,''')) t from dual
+      union all 
+      select wwv_flow_lang.system_message('N_HOURS','10') d, 
+      trim(to_char(10/24,'00000.99999999999','NLS_NUMERIC_CHARACTERS=''.,''')) t from dual
+      union all 
+      select wwv_flow_lang.system_message('N_HOURS','12') d, 
+      trim(to_char(12/24,'00000.99999999999','NLS_NUMERIC_CHARACTERS=''.,''')) t from dual
+      union all 
+      select wwv_flow_lang.system_message('N_HOURS','16') d, 
+      trim(to_char(16/24,'00000.9999999999','NLS_NUMERIC_CHARACTERS=''.,''')) t from dual
+      union all 
+      select wwv_flow_lang.system_message('N_DAY','1') d, trim(to_char(1,'00000.9999999999')) t from dual
+      union all 
+      select wwv_flow_lang.system_message('N_DAYS','2') d, trim(to_char(2,'00000.9999999999')) t from dual
+      union all 
+      select wwv_flow_lang.system_message('N_DAYS','3') d, trim(to_char(3,'00000.9999999999')) t from dual
+      union all 
+      select wwv_flow_lang.system_message('N_DAYS','4') d, trim(to_char(4,'00000.9999999999')) t from dual
+      union all 
+      select wwv_flow_lang.system_message('N_DAYS','5') d, trim(to_char(5,'00000.9999999999')) t from dual
+      union all 
+      select wwv_flow_lang.system_message('N_WEEK','1') d, trim(to_char(7,'00000.9999999999')) t from dual
+      union all 
+      select wwv_flow_lang.system_message('N_WEEKS','2') d, trim(to_char(14,'00000.9999999999')) t from dual
+      order by 2
+
+- # ====== List of Values: TRUNCATION OPTIONS ==================
+  id: 38767842401945241341
+  identification: 
+    name: TRUNCATION OPTIONS
+
+  subscription: 
+    version-number: 37167692709758
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: Retain existing history and generate additiona
+    id: 38767842599322241343
+    entry: 
+      sequence: 10
+      display: Retain existing history and generate additional history
+      return: N
+
+  - # ====== Entry: Truncate existing sales history and generate n
+    id: 38767842799193241344
+    entry: 
+      sequence: 20
+      display: Truncate existing sales history and generate new history
+      return: Y
+
+- # ====== List of Values: AUTO REFRESH ========================
+  id: 38767959528768903500
+  identification: 
+    name: AUTO REFRESH
+
+  subscription: 
+    version-number: 37167692709754
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: Every 5 seconds ==============================
+    id: 38767959700128903501
+    entry: 
+      sequence: 10
+      display: Every 5 seconds
+      return: 5
+
+  - # ====== Entry: Every 10 seconds =============================
+    id: 38767959910713903501
+    entry: 
+      sequence: 20
+      display: Every 10 seconds
+      return: 10
+
+  - # ====== Entry: Every 30 seconds =============================
+    id: 38767960131268903501
+    entry: 
+      sequence: 30
+      display: Every 30 seconds
+      return: 30
+
+  - # ====== Entry: Every 1 minute ===============================
+    id: 38767960603273905624
+    entry: 
+      sequence: 40
+      display: Every 1 minute
+      return: 40
+
+  - # ====== Entry: Every Second =================================
+    id: 38768116603402965452
+    entry: 
+      sequence: 1
+      display: Every Second
+      return: 1
+
+- # ====== List of Values: NUMBER OF ROWS PER PAGE =============
+  id: 40784842327395859934
+  identification: 
+    name: NUMBER OF ROWS PER PAGE
+
+  subscription: 
+    version-number: 37167692709758
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: 5 ============================================
+    id: 40784842517532859939
+    entry: 
+      sequence: 10
+      display: 5
+      return: 5
+
+  - # ====== Entry: 10 ===========================================
+    id: 40784842709967859942
+    entry: 
+      sequence: 20
+      display: 10
+      return: 10
+
+  - # ====== Entry: 15 ===========================================
+    id: 40784842921616859942
+    entry: 
+      sequence: 30
+      display: 15
+      return: 15
+
+  - # ====== Entry: 20 ===========================================
+    id: 40784843116348859942
+    entry: 
+      sequence: 40
+      display: 20
+      return: 20
+
+  - # ====== Entry: 100 ==========================================
+    id: 40784843327858859942
+    entry: 
+      sequence: 50
+      display: 100
+      return: 100
+
+  - # ====== Entry: 500 ==========================================
+    id: 40784843528978859942
+    entry: 
+      sequence: 60
+      display: 500
+      return: 500
+
+  - # ====== Entry: 1 ============================================
+    id: 40784843725254859942
+    entry: 
+      sequence: 7
+      display: 1
+      return: 1
+
+  - # ====== Entry: 1,000 ========================================
+    id: 40784843911837859942
+    entry: 
+      sequence: 80
+      display: 1,000
+      return: 1000
+
+- # ====== List of Values: DESKTOP THEME STYLES ================
+  id: 41156006195961306055
+  identification: 
+    name: DESKTOP THEME STYLES
+
+  subscription: 
+    version-number: 37167692709758
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select s.name d,
+             s.theme_style_id r
+        from apex_application_theme_styles s,
+             apex_application_themes t
+       where s.application_id = :app_id
+         and t.application_id = s.application_id
+         and t.theme_number   = s.theme_number
+         and t.is_current     = 'Yes'
+       order by 1
+
+  column-mapping: 
+    return: R
+    display: D
+    default-sort: Use Order By from Query
+
+- # ====== List of Values: USER_THEME_PREFERENCE ===============
+  id: 41156006896096306065
+  identification: 
+    name: USER_THEME_PREFERENCE
+
+  subscription: 
+    version-number: 37167692709758
+
+  source: 
+    location: Static Values
+
+  entries: 
+  - # ====== Entry: Allow End Users to choose Theme Style ========
+    id: 41156007217671306066
+    entry: 
+      sequence: 1
+      display: Allow End Users to choose Theme Style
+      return: Yes
+

@@ -1,0 +1,1721 @@
+---
+# ====== Page: Store =========================================
+id: 7
+identification: 
+  name: Store
+  title: Store
+  page-group: Stores # 39732638949839161918
+
+appearance: 
+  page-mode: Normal
+  page-template: Theme Default
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: First item on page
+  warn-on-unsaved-changes: false
+
+javascript: 
+  file-urls: 
+  - 'https://maps.googleapis.com/maps/api/js?key=&P7_MAPS_API_KEY.&amp;sensor=false'
+  function-and-global-variable-declaration: |
+    var htmldb_delete_message = '"DELETE_CONFIRM_MSG"';
+    
+    var g_initialAddress = "";
+    var g_addrFieldMap = {
+        "route": "P7_STORE_ADDRESS",
+        "sublocality": "P7_STORE_CITY",
+        "locality": "P7_STORE_CITY",
+        "administrative_area_level_1": "P7_STORE_STATE",
+        "postal_code": "P7_STORE_ZIP"
+    };
+    
+    function getAddressString() {
+        var addr = $v("P7_STORE_ADDRESS") + ", " + $v("P7_STORE_CITY") + ", " + $v("P7_STORE_STATE") + ", " + $v("P7_STORE_ZIP");
+        return addr;
+    }
+    
+    function updateAddress(result, updateLoc) {
+        var i, type, value, field, loc, lat, lng, stnum, address, subloc, city,
+            ok = true,
+            comps = result.address_components;
+    
+        for (i = 0; i < comps.length; i++) {
+            type = comps[i].types[0];
+            value = comps[i][type == "administrative_area_level_1" ? "short_name" : "long_name"];
+            if (type == "street_number") {
+                stnum = value;
+            } else if (type == "route") {
+                address = value;
+            } else if (type == "sublocality") {
+                subloc = value;
+            } else if (type == "locality") {
+                city = value;
+            } else {
+                field = g_addrFieldMap[type];
+                if (field) {
+                    $s(field, value);
+                }
+            }
+        }
+        if (stnum && address) {
+            address = stnum + " " + address;
+        }
+        if (address) {
+            field = g_addrFieldMap["route"];
+            if (field) {
+                $s(field, address);
+            }
+        }
+        if (subloc) {
+            city = subloc;
+        }
+        if (city) {
+            field = g_addrFieldMap["locality"];
+            if (field) {
+                $s(field, city);
+            }
+        }
+        if (!address || $v("P7_STORE_ADDRESS") === "" || $v("P7_STORE_CITY") === "" || $v("P7_STORE_STATE") === "" || $v("P7_STORE_ZIP") === "") {
+            ok = false;
+        }
+    
+        if (updateLoc) {
+            loc = result.geometry.location;
+            lat = loc.lat();
+            lng = loc.lng();
+            $s("P7_STORE_LAT", lat);
+            $s("P7_STORE_LNG", lng);
+        }
+        return ok;
+    }
+    
+    function validateAddressAndSubmit(action) {
+        var gc,
+            curAddr = getAddressString(),
+            lat = $v("P7_STORE_LAT"),
+            lng = $v("P7_STORE_LNG");
+    
+        // don't check addresses if there is no API key or required fields are missing (let the server validate), or have lat, lng and no address change
+        // do check if missing lat or lag or the address has been edited
+        if ($v("P7_MAPS_API_KEY") !== "" && 
+              $v("P7_STORE_ADDRESS") !== "" && 
+              $v("P7_STORE_CITY") !== "" && 
+              $v("P7_STORE_NAME") !== "" && 
+              (lat === "" || lng === "" || curAddr !== g_initialAddress)) {
+    
+            apex.jQuery("#storeForm h1").first().append("<span id='checking' style='padding-left: 40px;'>- Validating Address - </span>");
+            apex.jQuery(".addressCheckMessage").hide();
+    
+            gc = new google.maps.Geocoder();
+            gc.geocode({
+                address: curAddr
+            }, function (results, status) {
+                var i, choices;
+    
+                apex.jQuery("#checking").remove();
+                if (status === google.maps.GeocoderStatus.OK) {
+                    if (results.length === 1) {
+                        if (updateAddress(results[0], true)) {
+                            apex.submit(action);
+                            return;
+                        } else {
+                            apex.jQuery("#incomplete").show();
+                        }
+                    } else {
+                        choices = "";
+                        for (i = 0; i < results.length; i++) {
+                            choices += "<li><input id='addrChoices_" + i + 
+                                       "' type=radio name='addrchoice'><label for='addrChoices_" + i + "'>" + 
+                                       results[i].formatted_address + "</label></li>";
+                        }
+                        apex.jQuery("#addrChoices").html(choices).off("change").on("change", function (evt) {
+                            var i = evt.target.id;
+                            i = i.split("_")[1];
+                            updateAddress(results[i], false);
+                        });
+                        apex.jQuery("#multiple").show();
+                    }
+                } else {
+                    switch (status) {
+                    case google.maps.GeocoderStatus.ZERO_RESULTS:
+                        apex.jQuery("#notfound").show();
+                        break;
+                    case google.maps.GeocoderStatus.OVER_QUERY_LIMIT:
+                        apex.jQuery("#overlimit").show();
+                        break;
+                    default:
+                        apex.jQuery("#checkfailed").show();
+                    }
+                }
+                openModal("adrchkres");
+            });
+        } else {
+            apex.submit(action);
+        }
+    }
+  execute-when-page-loads: |
+    (function ($) {
+        g_initialAddress = getAddressString();
+    })(apex.jQuery);
+
+css: 
+  inline: |
+    .addressCheckMessage {
+      display: none;
+    }
+    #adrchkres {
+      width: 80%;
+    }
+    
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Unrestricted
+  form-auto-complete: Off
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Always
+
+server-cache: 
+  caching: Disabled
+
+help: 
+  help-text: No help is available for this page.
+
+regions: 
+- # ====== Region: Address Validation ==========================
+  id: 36900194520254366487
+  identification: 
+    name: Address Validation
+    type: Static Content
+
+  layout: 
+    sequence: 30
+    parent-region: No Parent
+    slot: REGION_POSITION_04
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    static-id: adrchkres
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Incomplete address ==========================
+  id: 36911227314428317885
+  identification: 
+    name: Incomplete address
+    type: Static Content
+
+  source: 
+    html-code: <p>Not a complete address</p>
+
+  layout: 
+    sequence: 50
+    parent-region: Address Validation # 36900194520254366487
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    css-classes: 
+    - addressCheckMessage
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    static-id: incomplete
+    region-display-selector: false
+    exclude-title-from-translation: true
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Multiple addresses ==========================
+  id: 36911227628411331379
+  identification: 
+    name: Multiple addresses
+    type: Static Content
+
+  source: 
+    html-code: |
+      <p>Multiple results found. Choose one of the following.</p>
+      <ul id="addrChoices">
+      </ul>
+      
+
+  layout: 
+    sequence: 60
+    parent-region: Address Validation # 36900194520254366487
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    css-classes: 
+    - addressCheckMessage
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    static-id: multiple
+    region-display-selector: false
+    exclude-title-from-translation: true
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Not Found ===================================
+  id: 36911243200332796326
+  identification: 
+    name: Not Found
+    type: Static Content
+
+  source: 
+    html-code: |
+      <p>Address not found. Enter a correct address and try again.</p>
+      
+
+  layout: 
+    sequence: 70
+    parent-region: Address Validation # 36900194520254366487
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    css-classes: 
+    - addressCheckMessage
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    static-id: notfound
+    region-display-selector: false
+    exclude-title-from-translation: true
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Over Limit ==================================
+  id: 36911244113407819042
+  identification: 
+    name: Over Limit
+    type: Static Content
+
+  source: 
+    html-code: |
+      <p>Over limit try again later.</p>
+      
+
+  layout: 
+    sequence: 80
+    parent-region: Address Validation # 36900194520254366487
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    css-classes: 
+    - addressCheckMessage
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    static-id: overlimit
+    region-display-selector: false
+    exclude-title-from-translation: true
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Check Failed ================================
+  id: 36911245003841825770
+  identification: 
+    name: Check Failed
+    type: Static Content
+
+  source: 
+    html-code: |
+      <p>Failed to check address.</p>
+      
+
+  layout: 
+    sequence: 90
+    parent-region: Address Validation # 36900194520254366487
+    slot: SUB_REGIONS
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--scrollBody
+    css-classes: 
+    - addressCheckMessage
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    static-id: checkfailed
+    region-display-selector: false
+    exclude-title-from-translation: true
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Store =======================================
+  id: 38749037121500248902
+  identification: 
+    name: Store
+    type: Static Content
+
+  layout: 
+    sequence: 10
+    parent-region: No Parent
+    slot: BODY_3
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noPadding
+    - t-Region--hideHeader js-addHiddenHeadingRoleDesc
+    - t-Region--noUI
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    static-id: storeForm
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      output-as: HTML
+      expand-shortcuts: false
+
+- # ====== Region: Breadcrumb ==================================
+  id: 38749041805418248925
+  identification: 
+    name: Breadcrumb
+    type: Breadcrumb
+
+  source: 
+    breadcrumb: ' Breadcrumb' # 44377004153871086216
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Title Bar
+    template-options: 
+    - '#DEFAULT#'
+    - t-BreadcrumbRegion--useBreadcrumbTitle
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      breadcrumb-template: Breadcrumb
+      template-options: 
+      - '#DEFAULT#'
+
+page-items: 
+- # ====== Page Item: P7_MAPS_API_KEY ==========================
+  id: 36911157724991279767
+  identification: 
+    name: P7_MAPS_API_KEY
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 20
+    region: Store # 38749037121500248902
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Null
+    used: Only when current value in session state is null
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P7_ID ====================================
+  id: 38749038528419248912
+  identification: 
+    name: P7_ID
+    type: Hidden
+
+  settings: 
+    value-protected: true
+
+  layout: 
+    sequence: 10
+    region: Store # 38749037121500248902
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Database Column
+    database-column: ID
+    used: Always, replacing any existing value in session state
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P7_STORE_NAME ============================
+  id: 38749038721821248919
+  identification: 
+    name: P7_STORE_NAME
+    type: Text Field
+
+  label: 
+    label: Store Name
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: None
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 40
+    region: Store # 38749037121500248902
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Required - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 64
+
+  validation: 
+    value-required: true
+    maximum-length: 255
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Database Column
+    database-column: STORE_NAME
+    used: Always, replacing any existing value in session state
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P7_STORE_TYPE ============================
+  id: 38749038926131248921
+  identification: 
+    name: P7_STORE_TYPE
+    type: Select List
+
+  label: 
+    label: Store Type
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 60
+    region: Store # 38749037121500248902
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Required - Floating
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: true
+
+  list-of-values: 
+    type: Shared Component
+    list-of-values: STORE TYPE # 38748855630557711795
+    display-extra-values: true
+    display-null-value: true
+    null-display-value: '- Select Value -'
+
+  advanced: 
+    css-classes: 
+    - mnw180
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Database Column
+    database-column: STORE_TYPE
+    used: Always, replacing any existing value in session state
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P7_STORE_ADDRESS =========================
+  id: 38749039127315248921
+  identification: 
+    name: P7_STORE_ADDRESS
+    type: Text Field
+
+  label: 
+    label: Address
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: None
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 70
+    region: Store # 38749037121500248902
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Required - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 64
+
+  validation: 
+    value-required: true
+    maximum-length: 255
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Database Column
+    database-column: STORE_ADDRESS
+    used: Always, replacing any existing value in session state
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P7_STORE_CITY ============================
+  id: 38749039317907248921
+  identification: 
+    name: P7_STORE_CITY
+    type: Text Field
+
+  label: 
+    label: City
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: None
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 80
+    region: Store # 38749037121500248902
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Required - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 60
+
+  validation: 
+    value-required: true
+    maximum-length: 50
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Database Column
+    database-column: STORE_CITY
+    used: Always, replacing any existing value in session state
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P7_STORE_STATE ===========================
+  id: 38749039529528248921
+  identification: 
+    name: P7_STORE_STATE
+    type: Text Field
+
+  label: 
+    label: State
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: None
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 90
+    region: Store # 38749037121500248902
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Required - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 60
+
+  validation: 
+    value-required: true
+    maximum-length: 50
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Database Column
+    database-column: STORE_STATE
+    used: Always, replacing any existing value in session state
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P7_STORE_ZIP =============================
+  id: 38749039725441248921
+  identification: 
+    name: P7_STORE_ZIP
+    type: Text Field
+
+  label: 
+    label: Zip
+    alignment: Left
+
+  settings: 
+    subtype: Text
+    trim-spaces: None
+    text-case: NO CHANGE
+    submit-when-enter-pressed: false
+    disabled: false
+
+  layout: 
+    sequence: 100
+    region: Store # 38749037121500248902
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Required - Floating
+    template-options: 
+    - '#DEFAULT#'
+    width: 30
+
+  validation: 
+    value-required: true
+    maximum-length: 12
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Database Column
+    database-column: STORE_ZIP
+    used: Always, replacing any existing value in session state
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P7_STORE_LAT =============================
+  id: 38749039908560248921
+  identification: 
+    name: P7_STORE_LAT
+    type: Hidden
+
+  settings: 
+    value-protected: false
+
+  layout: 
+    sequence: 110
+    region: Store # 38749037121500248902
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Database Column
+    database-column: STORE_LAT
+    used: Always, replacing any existing value in session state
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P7_STORE_LNG =============================
+  id: 38749040116229248922
+  identification: 
+    name: P7_STORE_LNG
+    type: Hidden
+
+  settings: 
+    value-protected: false
+
+  layout: 
+    sequence: 120
+    region: Store # 38749037121500248902
+    slot: BODY
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Database Column
+    database-column: STORE_LNG
+    used: Always, replacing any existing value in session state
+
+  session-state: 
+    data-type: VARCHAR2
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P7_STORE_ITEMS ===========================
+  id: 38749044901563290837
+  identification: 
+    name: P7_STORE_ITEMS
+    type: Shuttle
+
+  label: 
+    label: Store Inventory
+    alignment: Left
+
+  settings: 
+    show-controls: Moving Only
+
+  multiple-values: 
+    type: Delimited List
+    separator: ':'
+
+  layout: 
+    sequence: 130
+    region: Store # 38749037121500248902
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    height: 10
+
+  validation: 
+    value-required: false
+
+  list-of-values: 
+    type: SQL Query
+    sql-query: |
+      select item_name, id
+      from OOW_DEMO_items i
+      order by upper(item_name)
+    display-extra-values: true
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Function Body
+    language: PL/SQL
+    pl/sql-function-body: |
+      declare
+          l_vc_arr2   apex_application_global.vc_arr2;
+      begin
+          select item_id
+          bulk collect into l_vc_arr2 
+          from OOW_DEMO_STORE_PRODUCTS
+          where store_id = :P7_ID;
+       
+          return apex_util.table_to_string ( l_vc_arr2 ); 
+      end;
+    used: Always, replacing any existing value in session state
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P7_STORE_OPEN_DATE =======================
+  id: 38752478508225212524
+  identification: 
+    name: P7_STORE_OPEN_DATE
+    type: Date Picker (jQuery) [Deprecated]
+
+  label: 
+    label: Store Opened On
+    alignment: Left
+
+  settings: 
+    show: On icon click
+    show-other-months: false
+    navigation-list-for: None
+
+  layout: 
+    sequence: 50
+    region: Store # 38749037121500248902
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Optional - Floating
+    template-options: 
+    - '#DEFAULT#'
+    format-mask: DD-MON-YYYY
+    width: 64
+
+  validation: 
+    value-required: false
+    maximum-length: 4000
+
+  advanced: 
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Database Column
+    database-column: STORE_OPEN_DATE
+    used: Always, replacing any existing value in session state
+
+  default: 
+    type: SQL Query (return single value)
+    sql-query-(return-single-value): select sysdate from dual
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+- # ====== Page Item: P7_REGION_ID =============================
+  id: 38752490413616403350
+  identification: 
+    name: P7_REGION_ID
+    type: Select List
+
+  label: 
+    label: Region
+    alignment: Left
+
+  settings: 
+    page-action-on-selection: None
+
+  multiple-values: 
+    type: No
+
+  layout: 
+    sequence: 55
+    region: Store # 38749037121500248902
+    slot: BODY
+    alignment: Left
+    start-new-layout: false
+    start-new-row: false
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+    label-column-span: Page Template Default
+
+  appearance: 
+    template: Required - Floating
+    template-options: 
+    - '#DEFAULT#'
+    height: 1
+
+  validation: 
+    value-required: true
+
+  list-of-values: 
+    type: SQL Query
+    sql-query: select region_name, id from oow_demo_regions order by 1
+    display-extra-values: true
+    display-null-value: true
+    null-display-value: '- Select Value -'
+
+  advanced: 
+    css-classes: 
+    - mnw180
+    warn-on-unsaved-changes: Page Default
+
+  source: 
+    type: Database Column
+    database-column: REGION_ID
+    used: Always, replacing any existing value in session state
+
+  session-state: 
+    storage: Per Session (Persistent)
+
+  quick-picks: 
+    show-quick-picks: false
+
+  security: 
+    session-state-protection: Unrestricted
+    store-value-encrypted-in-session-state: false
+    restricted-characters: All characters can be saved.
+
+buttons: 
+- # ====== Button: CLOSE =======================================
+  id: 36900201511156007331
+  identification: 
+    button-name: CLOSE
+    label: OK
+
+  layout: 
+    sequence: 50
+    region: Address Validation # 36900194520254366487
+    slot: CLOSE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: true
+    template-options: 
+    - '#DEFAULT#'
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: false
+
+  advanced: 
+    static-id: adrchkclose
+
+- # ====== Button: CREATE ======================================
+  id: 38749037300554248904
+  identification: 
+    button-name: CREATE
+    label: Add Store
+
+  layout: 
+    sequence: 40
+    region: Breadcrumb # 38749041805418248925
+    slot: CREATE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    icon: fa-plus
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: true
+    database-action: SQL INSERT action
+
+  server-side-condition: 
+    type: Item is NULL
+    item: P7_ID
+
+- # ====== Button: SAVE ========================================
+  id: 38749037427065248904
+  identification: 
+    button-name: SAVE
+    label: Apply Changes
+
+  layout: 
+    sequence: 30
+    region: Breadcrumb # 38749041805418248925
+    slot: CHANGE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--noUI
+
+  behavior: 
+    action: Defined by Dynamic Action
+    execute-validations: true
+    database-action: SQL UPDATE action
+
+  server-side-condition: 
+    type: Item is NOT NULL
+    item: P7_ID
+
+- # ====== Button: DELETE ======================================
+  id: 38749037527248248904
+  identification: 
+    button-name: DELETE
+    label: Delete
+
+  layout: 
+    sequence: 20
+    region: Breadcrumb # 38749041805418248925
+    slot: DELETE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--noUI
+
+  behavior: 
+    action: Redirect to URL
+    target: "javascript:apex.confirm(htmldb_delete_message,'DELETE');"
+    execute-validations: false
+    warn-on-unsaved-changes: Do Not Check
+    database-action: SQL DELETE action
+
+  server-side-condition: 
+    type: Item is NOT NULL
+    item: P7_ID
+
+- # ====== Button: CANCEL ======================================
+  id: 38749037707437248904
+  identification: 
+    button-name: CANCEL
+    label: Cancel
+
+  layout: 
+    sequence: 10
+    region: Breadcrumb # 38749041805418248925
+    slot: CLOSE
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--noUI
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:&LAST_VIEW.:&SESSION.::&DEBUG.:::'
+      page: '&LAST_VIEW.'
+
+    warn-on-unsaved-changes: Do Not Check
+
+dynamic-actions: 
+- # ====== Dynamic Action: Close Dialog ========================
+  id: 36911246013931857090
+  identification: 
+    name: Close Dialog
+
+  execution: 
+    sequence: 30
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: CLOSE # 36900201511156007331
+
+  actions: 
+  - # ====== Action: Execute JavaScript Code =====================
+    id: 36911246310726857097
+    identification: 
+      action: Execute JavaScript Code
+
+    settings: 
+      code: closeModal();
+
+    execution: 
+      sequence: 10
+      event: Close Dialog # 36911246013931857090
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: CheckSave ===========================
+  id: 38749042821817258874
+  identification: 
+    name: CheckSave
+
+  execution: 
+    sequence: 10
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: SAVE # 38749037427065248904
+
+  actions: 
+  - # ====== Action: Execute JavaScript Code =====================
+    id: 38749043099886258875
+    identification: 
+      action: Execute JavaScript Code
+
+    settings: 
+      code: validateAddressAndSubmit("SAVE");
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P7_STORE_LAT
+      - P7_STORE_LNG
+
+    execution: 
+      sequence: 10
+      event: CheckSave # 38749042821817258874
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+- # ====== Dynamic Action: CheckCreate =========================
+  id: 38749043300823262234
+  identification: 
+    name: CheckCreate
+
+  execution: 
+    sequence: 20
+    event-scope: Static
+    type: Immediate
+
+  when: 
+    event: Click
+    selection-type: Button
+    button: CREATE # 38749037300554248904
+
+  actions: 
+  - # ====== Action: Execute JavaScript Code =====================
+    id: 38749043625321262234
+    identification: 
+      action: Execute JavaScript Code
+
+    settings: 
+      code: validateAddressAndSubmit("CREATE");
+
+    affected-elements: 
+      selection-type: Item(s)
+      item(s): 
+      - P7_STORE_LAT
+      - P7_STORE_LNG
+
+    execution: 
+      sequence: 10
+      event: CheckCreate # 38749043300823262234
+      fire-when-event-result-is: True
+      fire-on-initialization: false
+
+validations: 
+- # ====== Validation: P7_STORE_NAME Not Null ==================
+  id: 36871387714766578360
+  identification: 
+    name: P7_STORE_NAME Not Null
+
+  execution: 
+    sequence: 10
+
+  validation: 
+    type: Function Body (returning Boolean)
+    language: PL/SQL
+    pl/sql-function-body: 'return trim(:P7_STORE_NAME) is not null'
+    always-execute: false
+
+  error: 
+    error-message: '#LABEL# must have some value.'
+    display-location: Inline with Field and in Notification
+    associated-item: P7_STORE_NAME # 38749038721821248919
+
+  server-side-condition: 
+    type: Request is contained in Value
+    value: CREATE,SAVE
+
+- # ====== Validation: P7_STORE_ADDRESS Not Null ===============
+  id: 36900188531100991149
+  identification: 
+    name: P7_STORE_ADDRESS Not Null
+
+  execution: 
+    sequence: 20
+
+  validation: 
+    type: Function Body (returning Boolean)
+    language: PL/SQL
+    pl/sql-function-body: 'return trim(:P7_STORE_ADDRESS) is not null'
+    always-execute: false
+
+  error: 
+    error-message: '#LABEL# must have some value.'
+    display-location: Inline with Field and in Notification
+    associated-item: P7_STORE_ADDRESS # 38749039127315248921
+
+  server-side-condition: 
+    type: Request is contained in Value
+    value: CREATE,SAVE
+
+- # ====== Validation: P7_STORE_CITY Not Null ==================
+  id: 36900188717945997234
+  identification: 
+    name: P7_STORE_CITY Not Null
+
+  execution: 
+    sequence: 30
+
+  validation: 
+    type: Function Body (returning Boolean)
+    language: PL/SQL
+    pl/sql-function-body: 'return trim(:P7_STORE_CITY) is not null'
+    always-execute: false
+
+  error: 
+    error-message: '#LABEL# must have some value.'
+    display-location: Inline with Field and in Notification
+    associated-item: P7_STORE_CITY # 38749039317907248921
+
+  server-side-condition: 
+    type: Request is contained in Value
+    value: CREATE,SAVE
+
+processes: 
+- # ====== Process: Populate Google Maps API Key ===============
+  id: 36911157428628271697
+  identification: 
+    name: Populate Google Maps API Key
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |
+      begin
+          select preference_value
+            into :P7_MAPS_API_KEY
+            from oow_demo_preferences
+           where preference_name = 'GOOGLE_MAPS_API_KEY';
+      exception
+          when no_data_found then
+              :P7_MAPS_API_KEY := null;
+      end;
+
+  execution: 
+    sequence: 50
+    point: Before Header
+    run-process: Once Per Page Visit (default)
+
+- # ====== Process: Fetch Row from OOW_DEMO_STORES =============
+  id: 38749041317344248924
+  identification: 
+    name: Fetch Row from OOW_DEMO_STORES
+    type: Automatic Row Fetch [Legacy]
+    execution-chain: None
+
+  settings: 
+    table-owner: PARSING SCHEMA
+    table-name: OOW_DEMO_STORES
+    primary-key-column-: ID
+    primary-key-item: P7_ID
+
+  execution: 
+    sequence: 10
+    point: After Header
+    run-process: Once Per Page Visit (default)
+
+- # ====== Process: Process Row of OOW_DEMO_STORES =============
+  id: 38749041524827248925
+  identification: 
+    name: Process Row of OOW_DEMO_STORES
+    type: Automatic Row Processing (DML) [Legacy]
+    execution-chain: None
+
+  settings: 
+    table-owner: PARSING SCHEMA
+    table-name: OOW_DEMO_STORES
+    primary-key-column-: ID
+    primary-key-item: P7_ID
+    return-key-into-item: P7_ID
+    lock-row: true
+    supported-operations: 'I:U:D'
+
+  execution: 
+    sequence: 20
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  success-message: 
+    success-message: Action Processed.
+
+  error: 
+    error-message: '#SQLERRM#'
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    type: Request is contained in Value
+    value: CREATE,SAVE,DELETE
+
+- # ====== Process: reset page =================================
+  id: 38749041730728248925
+  identification: 
+    name: reset page
+    type: Clear Session State
+    execution-chain: None
+
+  settings: 
+    type: Clear all Items on the Current Page
+
+  execution: 
+    sequence: 40
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  error: 
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    when-button-pressed: DELETE # 38749037527248248904
+
+- # ====== Process: Save Inventory =============================
+  id: 38749045220263296307
+  identification: 
+    name: Save Inventory
+    type: Execute Code
+    execution-chain: None
+
+  source: 
+    location: Local Database
+    language: PL/SQL
+    pl/sql-code: |
+      declare 
+      	l_inv apex_application_global.vc_arr2; 
+      begin 
+      	-- convert the colon separated string into an array 
+      	l_inv := apex_util.string_to_table(:P7_STORE_ITEMS);
+      
+      	delete from OOW_DEMO_STORE_PRODUCTS where store_id = :P7_ID;
+      	for i in 1..l_inv.count loop 
+      		insert into OOW_DEMO_STORE_PRODUCTS (store_id, item_id)
+      		values( :P7_ID, l_inv(i) );
+      	end loop; 
+      end;
+
+  execution: 
+    sequence: 30
+    point: Processing
+    run-process: Once Per Page Visit (default)
+
+  success-message: 
+    success-message: Inventory updated.
+
+  error: 
+    error-message: '#SQLERRM#'
+    display-location: Inline in Notification
+
+  server-side-condition: 
+    type: Item is NOT NULL
+    item: P7_STORE_ITEMS
+
+branches: 
+- # ====== Branch: Go To Page 6 ================================
+  id: 38749038310742248907
+  identification: 
+    name: Go To Page 6
+
+  execution: 
+    sequence: 10
+    point: After Processing
+
+  behavior: 
+    type: Page or URL (Redirect)
+    target: 
+      url: 'f?p=&APP_ID.:6:&SESSION.&success_msg=#SUCCESS_MSG#'
+      page: 6 # Stores Report  - Content Row
+

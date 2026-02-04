@@ -1,0 +1,1205 @@
+---
+# ====== Page: Stores Report  - Content Row ==================
+id: 6
+identification: 
+  name: Stores Report  - Content Row
+  alias: STORES-REPORT-CONTENT-ROW
+  title: Stores  - Content Row
+  page-group: Stores # 39732638949839161918
+
+appearance: 
+  page-mode: Normal
+  page-template: Left Side Column
+  template-options: 
+  - '#DEFAULT#'
+
+navigation-menu: 
+  override-user-interface-level: false
+
+navigation: 
+  cursor-focus: First item on page
+  warn-on-unsaved-changes: false
+
+security: 
+  authentication: Page Requires Authentication
+  deep-linking: Application Default
+  page-access-protection: Unrestricted
+  form-auto-complete: On
+  browser-cache: Application Default
+
+session-management: 
+  rejoin-sessions: Application Default
+
+advanced: 
+  enable-duplicate-page-submissions: Yes - Enable page to be re-posted
+  reload-on-submit: Always
+
+server-cache: 
+  caching: Disabled
+
+help: 
+  help-text: No help is available for this page.
+
+regions: 
+- # ====== Region: Stores ======================================
+  id: 22512647115488604966
+  identification: 
+    name: Stores
+    type: Content Row
+
+  source: 
+    location: Local Database
+    type: SQL Query
+    sql-query: |
+      select "ROWID",
+          ID,
+          region_id,
+          (select REGION_NAME from OOW_DEMO_REGIONS r where s.REGION_ID = r.id) region,
+          id store_id,
+          STORE_NAME,
+          STORE_TYPE,
+          STORE_ADDRESS,
+          STORE_CITY,
+          STORE_STATE,
+          STORE_ZIP,
+          store_lat,
+          store_lng,
+          (select count(*) from OOW_DEMO_STORE_PRODUCTS sls where sls.store_id = s.id) inventory_count,
+          decode(greatest(trunc(sysdate),STORE_OPEN_DATE),trunc(sysdate),'Open','Closed') as status,
+          decode(greatest(trunc(sysdate),STORE_OPEN_DATE),trunc(sysdate),'success','danger') as status_color,
+          STORE_OPEN_DATE, 
+          STORE_OPEN_DATE STORE_OPEN_DATE2,
+          n1,
+          n2,
+          n3,
+          n4,
+          (select max(date_of_sale) from OOW_DEMO_SALES_HISTORY h where s.ID = h.STORE_ID) last_sale
+      from "#OWNER#"."OOW_DEMO_STORES" s;
+        
+
+  order-by: 
+    type: None
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: BODY
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Standard
+    template-options: 
+    - '#DEFAULT#'
+    - t-Region--noPadding
+    - t-Region--removeHeader js-removeLandmark
+    - t-Region--noUI
+    - t-Region--scrollBody
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Region
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  server-side-condition: 
+    type: Expression
+    language: SQL
+    sql-expression: 1=1
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      display: Multiple (Report)
+
+    settings: 
+      overline: '&REGION.'
+      title: '&STORE_NAME.'
+      description: '&STORE_ADDRESS., &STORE_CITY. &STORE_STATE. &STORE_ZIP.'
+      miscellaneous: |
+        Store ID: &ID.<br>
+        Products: &INVENTORY_COUNT.
+      display-avatar: false
+      display-badge: true
+
+    badge: 
+      label: Status
+      value: STATUS
+      state: STATUS_COLOR
+      display-label: false
+      style: Default
+      shape: Default
+      size: Default
+      column-width: Small
+      position: START
+      alignment: START
+
+    appearance: 
+      apply-theme-colors: true
+      style: Default
+      hide-borders: false
+      remove-padding: false
+
+    row-selection: 
+      type: None
+
+    performance: 
+      lazy-loading: false
+
+    pagination: 
+      type: Scroll
+      initial-entities-count: 15
+      show-total-count: false
+
+    entity-title: 
+      singular: Store
+      plural: Stores
+
+  columns: 
+  - # ====== Column: ROWID =======================================
+    id: 22512649389920604989
+    identification: 
+      name: ROWID
+
+    layout: 
+      sequence: 10
+
+    source: 
+      type: Database Column
+      database-column: ROWID
+      data-type: ROWID
+      primary-key: true
+
+    accessibility: 
+      value-identifies-row: false
+
+  - # ====== Column: ID ==========================================
+    id: 22512649516398604990
+    identification: 
+      name: ID
+
+    layout: 
+      sequence: 20
+
+    source: 
+      type: Database Column
+      database-column: ID
+      data-type: NUMBER
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      group: false
+
+  - # ====== Column: REGION_ID ===================================
+    id: 22512649562872604991
+    identification: 
+      name: REGION_ID
+
+    layout: 
+      sequence: 30
+
+    source: 
+      type: Database Column
+      database-column: REGION_ID
+      data-type: NUMBER
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      group: false
+
+  - # ====== Column: REGION ======================================
+    id: 22512649673858604992
+    identification: 
+      name: REGION
+
+    layout: 
+      sequence: 40
+
+    source: 
+      type: Database Column
+      database-column: REGION
+      data-type: VARCHAR2
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      group: false
+
+  - # ====== Column: STORE_ID ====================================
+    id: 22512649804999604993
+    identification: 
+      name: STORE_ID
+
+    layout: 
+      sequence: 50
+
+    source: 
+      type: Database Column
+      database-column: STORE_ID
+      data-type: NUMBER
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      group: false
+
+  - # ====== Column: STORE_NAME ==================================
+    id: 22512649889309604994
+    identification: 
+      name: STORE_NAME
+
+    layout: 
+      sequence: 60
+
+    source: 
+      type: Database Column
+      database-column: STORE_NAME
+      data-type: VARCHAR2
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      group: false
+
+  - # ====== Column: STORE_TYPE ==================================
+    id: 22512649949739604995
+    identification: 
+      name: STORE_TYPE
+
+    layout: 
+      sequence: 70
+
+    source: 
+      type: Database Column
+      database-column: STORE_TYPE
+      data-type: VARCHAR2
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      group: false
+
+  - # ====== Column: STORE_ADDRESS ===============================
+    id: 22512650114249604996
+    identification: 
+      name: STORE_ADDRESS
+
+    layout: 
+      sequence: 80
+
+    source: 
+      type: Database Column
+      database-column: STORE_ADDRESS
+      data-type: VARCHAR2
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      group: false
+
+  - # ====== Column: STORE_CITY ==================================
+    id: 22512650207685604997
+    identification: 
+      name: STORE_CITY
+
+    layout: 
+      sequence: 90
+
+    source: 
+      type: Database Column
+      database-column: STORE_CITY
+      data-type: VARCHAR2
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      group: false
+
+  - # ====== Column: STORE_STATE =================================
+    id: 22512650310024604998
+    identification: 
+      name: STORE_STATE
+
+    layout: 
+      sequence: 100
+
+    source: 
+      type: Database Column
+      database-column: STORE_STATE
+      data-type: VARCHAR2
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      group: false
+
+  - # ====== Column: STORE_ZIP ===================================
+    id: 22512650401888604999
+    identification: 
+      name: STORE_ZIP
+
+    layout: 
+      sequence: 110
+
+    source: 
+      type: Database Column
+      database-column: STORE_ZIP
+      data-type: VARCHAR2
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      group: false
+
+  - # ====== Column: STORE_LAT ===================================
+    id: 22512650513659605000
+    identification: 
+      name: STORE_LAT
+
+    layout: 
+      sequence: 120
+
+    source: 
+      type: Database Column
+      database-column: STORE_LAT
+      data-type: NUMBER
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      group: false
+
+  - # ====== Column: STORE_LNG ===================================
+    id: 22512650581861605001
+    identification: 
+      name: STORE_LNG
+
+    layout: 
+      sequence: 130
+
+    source: 
+      type: Database Column
+      database-column: STORE_LNG
+      data-type: NUMBER
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      group: false
+
+  - # ====== Column: INVENTORY_COUNT =============================
+    id: 22512650675902605002
+    identification: 
+      name: INVENTORY_COUNT
+
+    layout: 
+      sequence: 140
+
+    source: 
+      type: Database Column
+      database-column: INVENTORY_COUNT
+      data-type: NUMBER
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      group: false
+
+  - # ====== Column: STORE_OPEN_DATE =============================
+    id: 22512650811181605003
+    identification: 
+      name: STORE_OPEN_DATE
+
+    layout: 
+      sequence: 150
+
+    source: 
+      type: Database Column
+      database-column: STORE_OPEN_DATE
+      data-type: TIMESTAMP WITH LOCAL TIME ZONE
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      format-mask: Month YYYY
+      group: false
+
+  - # ====== Column: STORE_OPEN_DATE2 ============================
+    id: 22512650848285605004
+    identification: 
+      name: STORE_OPEN_DATE2
+
+    layout: 
+      sequence: 160
+
+    source: 
+      type: Database Column
+      database-column: STORE_OPEN_DATE2
+      data-type: TIMESTAMP WITH LOCAL TIME ZONE
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      group: false
+
+  - # ====== Column: N1 ==========================================
+    id: 22512650950767605005
+    identification: 
+      name: N1
+
+    layout: 
+      sequence: 170
+
+    source: 
+      type: Database Column
+      database-column: N1
+      data-type: NUMBER
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      group: false
+
+  - # ====== Column: N2 ==========================================
+    id: 22512651088921605006
+    identification: 
+      name: N2
+
+    layout: 
+      sequence: 180
+
+    source: 
+      type: Database Column
+      database-column: N2
+      data-type: NUMBER
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      group: false
+
+  - # ====== Column: N3 ==========================================
+    id: 22512651217444605007
+    identification: 
+      name: N3
+
+    layout: 
+      sequence: 190
+
+    source: 
+      type: Database Column
+      database-column: N3
+      data-type: NUMBER
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      group: false
+
+  - # ====== Column: N4 ==========================================
+    id: 22512651288815605008
+    identification: 
+      name: N4
+
+    layout: 
+      sequence: 200
+
+    source: 
+      type: Database Column
+      database-column: N4
+      data-type: NUMBER
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      group: false
+
+  - # ====== Column: LAST_SALE ===================================
+    id: 22512651411874605009
+    identification: 
+      name: LAST_SALE
+
+    layout: 
+      sequence: 210
+
+    source: 
+      type: Database Column
+      database-column: LAST_SALE
+      data-type: TIMESTAMP WITH LOCAL TIME ZONE
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      group: false
+
+  - # ====== Column: STATUS ======================================
+    id: 22518853697625616167
+    identification: 
+      name: STATUS
+
+    layout: 
+      sequence: 220
+
+    source: 
+      type: Database Column
+      database-column: STATUS
+      data-type: VARCHAR2
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      group: false
+
+  - # ====== Column: STATUS_COLOR ================================
+    id: 22518853816965616168
+    identification: 
+      name: STATUS_COLOR
+
+    layout: 
+      sequence: 230
+
+    source: 
+      type: Database Column
+      database-column: STATUS_COLOR
+      data-type: VARCHAR2
+      primary-key: false
+
+    accessibility: 
+      value-identifies-row: false
+
+    appearance: 
+      group: false
+
+  actions: 
+  - # ====== Action: Full Row Link ===============================
+    id: 13905844508945641367
+    identification: 
+      position: Full Row Link # 349402277895478545
+
+    layout: 
+      sequence: 20
+
+    link: 
+      type: Redirect to Page in this Application
+      target: 
+        url: 'f?p=&APP_ID.:3:&SESSION.::&DEBUG.:RP,3:P3_ID:&ID.'
+        page: 3 # Store
+        clear-cache: RP,3
+        values: 
+          p3_id: '&ID.'
+
+  - # ====== Action: Actions =====================================
+    id: 22518853269122616163
+    identification: 
+      position: Primary Actions # 362316004162771045
+      template: Menu # 362317865359806322
+      label: Actions
+
+    layout: 
+      sequence: 10
+
+    appearance: 
+      display-type: Icon
+      icon: fa-ellipsis-v
+      hot: false
+      show-as-disabled: false
+      css-classes: 
+      - t-Button--noUI
+
+    menus: 
+    - # ====== Menu: View Details ==================================
+      id: 22518853444588616165
+      identification: 
+        type: Menu Entry
+        label: View Details
+        parent-menu: No Parent
+
+      layout: 
+        sequence: 10
+
+      link: 
+        type: Redirect to Page in this Application
+        target: 
+          url: 'f?p=&APP_ID.:3:&SESSION.::&DEBUG.::P3_ID:&ID.'
+          page: 3 # Store
+          values: 
+            p3_id: '&ID.'
+
+    - # ====== Menu: Edit ==========================================
+      id: 22518853609136616166
+      identification: 
+        type: Menu Entry
+        label: Edit
+        parent-menu: No Parent
+
+      layout: 
+        sequence: 20
+
+      link: 
+        type: Redirect to Page in this Application
+        target: 
+          url: 'f?p=&APP_ID.:7:&SESSION.::&DEBUG.:7:P7_ID:&ID.'
+          page: 7 # Store
+          clear-cache: 7
+          values: 
+            p7_id: '&ID.'
+
+- # ====== Region: Facets ======================================
+  id: 22518853028380616160
+  identification: 
+    name: Facets
+    type: Faceted Search
+
+  source: 
+    filtered-region: Stores # 22512647115488604966
+
+  layout: 
+    sequence: 30
+    parent-region: No Parent
+    slot: REGION_POSITION_02
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Blank with Attributes (No Grid)
+    template-options: 
+    - '#DEFAULT#'
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    settings: 
+      batch-facet-changes: false
+      compact-numbers-threshold: 10000
+      show-current-facets: No
+      show-total-row-count: No
+      show-charts: Dialog
+      display-chart-for-top-n-values: 10
+
+  facets: 
+  - # ====== Facet: P6_SEARCH ====================================
+    id: 22518853132743616161
+    identification: 
+      name: P6_SEARCH
+      type: Search
+
+    label: 
+      label: Search
+
+    settings: 
+      search-type: Row Search
+      input-field: Top of Faceted Search Region
+
+    layout: 
+      sequence: 10
+
+    security: 
+      store-value-encrypted-in-session-state: true
+
+  - # ====== Facet: P6_REGION ====================================
+    id: 22518853140773616162
+    identification: 
+      name: P6_REGION
+      type: Checkbox Group
+
+    label: 
+      label: Region
+      show-label-for-current-facet: true
+
+    layout: 
+      sequence: 20
+
+    appearance: 
+      display: Inline
+
+    list-of-values: 
+      type: Distinct Values
+      sort-direction: Ascending
+      include-null-option: false
+
+    list-entries: 
+      compute-counts: true
+      show-counts: true
+      zero-count-entries: Hide
+      sort-by-top-counts: true
+      show-selected-first: false
+      maximum-displayed-entries: 7
+      display-filter-initially: false
+
+    actions-menu: 
+      filter: true
+      chart: true
+
+    advanced: 
+      show-chart-initially: false
+      collapsible: false
+
+    source: 
+      database-column: REGION
+      data-type: VARCHAR2
+
+    multiple-values: 
+      type: No
+
+    security: 
+      store-value-encrypted-in-session-state: true
+      escape-special-characters: true
+
+  - # ====== Facet: P6_STATUS ====================================
+    id: 22518853900862616169
+    identification: 
+      name: P6_STATUS
+      type: Checkbox Group
+
+    label: 
+      label: Status
+      show-label-for-current-facet: true
+
+    layout: 
+      sequence: 30
+
+    appearance: 
+      display: Inline
+
+    list-of-values: 
+      type: Distinct Values
+      sort-direction: Ascending
+      include-null-option: false
+
+    list-entries: 
+      compute-counts: true
+      show-counts: true
+      zero-count-entries: Hide
+      sort-by-top-counts: true
+      show-selected-first: false
+      maximum-displayed-entries: 7
+      display-filter-initially: false
+
+    actions-menu: 
+      filter: true
+      chart: true
+
+    advanced: 
+      show-chart-initially: false
+      collapsible: false
+
+    source: 
+      database-column: STATUS
+      data-type: VARCHAR2
+
+    multiple-values: 
+      type: No
+
+    security: 
+      store-value-encrypted-in-session-state: true
+      escape-special-characters: true
+
+  - # ====== Facet: P6_STORE_STATE ===============================
+    id: 22518853986747616170
+    identification: 
+      name: P6_STORE_STATE
+      type: Checkbox Group
+
+    label: 
+      label: State
+      show-label-for-current-facet: true
+
+    layout: 
+      sequence: 40
+
+    appearance: 
+      display: Inline
+
+    list-of-values: 
+      type: Distinct Values
+      sort-direction: Ascending
+      include-null-option: false
+
+    list-entries: 
+      compute-counts: true
+      show-counts: true
+      zero-count-entries: Hide
+      sort-by-top-counts: true
+      show-selected-first: false
+      maximum-displayed-entries: 7
+      display-filter-initially: false
+
+    actions-menu: 
+      filter: true
+      chart: true
+
+    advanced: 
+      show-chart-initially: false
+      collapsible: false
+
+    source: 
+      database-column: STORE_STATE
+      data-type: VARCHAR2
+
+    multiple-values: 
+      type: No
+
+    security: 
+      store-value-encrypted-in-session-state: true
+      escape-special-characters: true
+
+  filters: 
+  - # ====== Filter: P6_SEARCH ===================================
+    id: 22518853132743616161
+    identification: 
+      name: P6_SEARCH
+      type: Search
+
+    label: 
+      label: Search
+
+    settings: 
+      search-type: Row Search
+      collapsed-search-field: false
+
+    layout: 
+      sequence: 10
+
+    security: 
+      store-value-encrypted-in-session-state: true
+
+  - # ====== Filter: P6_REGION ===================================
+    id: 22518853140773616162
+    identification: 
+      name: P6_REGION
+      type: Checkbox Group
+
+    label: 
+      label: Region
+
+    layout: 
+      sequence: 20
+
+    list-of-values: 
+      type: Distinct Values
+      sort-direction: Ascending
+      include-null-option: false
+
+    list-entries: 
+      compute-counts: true
+      show-counts: true
+      zero-count-entries: Hide
+      sort-by-top-counts: true
+      show-selected-first: false
+      client-side-filtering: false
+
+    suggestions: 
+      type: None
+
+    source: 
+      database-column: REGION
+      data-type: VARCHAR2
+
+    multiple-values: 
+      type: No
+
+    security: 
+      store-value-encrypted-in-session-state: true
+      escape-special-characters: true
+
+  - # ====== Filter: P6_STATUS ===================================
+    id: 22518853900862616169
+    identification: 
+      name: P6_STATUS
+      type: Checkbox Group
+
+    label: 
+      label: Status
+
+    layout: 
+      sequence: 30
+
+    list-of-values: 
+      type: Distinct Values
+      sort-direction: Ascending
+      include-null-option: false
+
+    list-entries: 
+      compute-counts: true
+      show-counts: true
+      zero-count-entries: Hide
+      sort-by-top-counts: true
+      show-selected-first: false
+      client-side-filtering: false
+
+    suggestions: 
+      type: None
+
+    source: 
+      database-column: STATUS
+      data-type: VARCHAR2
+
+    multiple-values: 
+      type: No
+
+    security: 
+      store-value-encrypted-in-session-state: true
+      escape-special-characters: true
+
+  - # ====== Filter: P6_STORE_STATE ==============================
+    id: 22518853986747616170
+    identification: 
+      name: P6_STORE_STATE
+      type: Checkbox Group
+
+    label: 
+      label: State
+
+    layout: 
+      sequence: 40
+
+    list-of-values: 
+      type: Distinct Values
+      sort-direction: Ascending
+      include-null-option: false
+
+    list-entries: 
+      compute-counts: true
+      show-counts: true
+      zero-count-entries: Hide
+      sort-by-top-counts: true
+      show-selected-first: false
+      client-side-filtering: false
+
+    suggestions: 
+      type: None
+
+    source: 
+      database-column: STORE_STATE
+      data-type: VARCHAR2
+
+    multiple-values: 
+      type: No
+
+    security: 
+      store-value-encrypted-in-session-state: true
+      escape-special-characters: true
+
+- # ====== Region: Breadcrumb ==================================
+  id: 38748755514447576235
+  identification: 
+    name: Breadcrumb
+    type: Breadcrumb
+
+  source: 
+    breadcrumb: ' Breadcrumb' # 44377004153871086216
+
+  layout: 
+    sequence: 20
+    parent-region: No Parent
+    slot: REGION_POSITION_01
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    template: Title Bar
+    template-options: 
+    - '#DEFAULT#'
+    - t-BreadcrumbRegion--useBreadcrumbTitle
+    render-components: Above Content
+
+  accessibility: 
+    use-landmark: true
+    landmark-type: Template Default
+
+  advanced: 
+    region-display-selector: false
+    exclude-title-from-translation: false
+
+  customization: 
+    customizable: Not Customizable By End Users
+
+  attributes: 
+    appearance: 
+      breadcrumb-template: Breadcrumb
+      template-options: 
+      - '#DEFAULT#'
+
+buttons: 
+- # ====== Button: CREATE ======================================
+  id: 38748755410403576235
+  identification: 
+    button-name: CREATE
+    label: Add Store
+
+  layout: 
+    sequence: 30
+    region: Breadcrumb # 38748755514447576235
+    slot: NEXT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--noUI
+    - t-Button--iconRight
+    icon: fa-plus
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:7:&SESSION.::&DEBUG.:7::'
+      page: 7 # Store
+      clear-cache: 7
+
+    warn-on-unsaved-changes: Do Not Check
+
+- # ====== Button: RESET_REPORT ================================
+  id: 38748852026486691705
+  identification: 
+    button-name: RESET_REPORT
+    label: Reset
+
+  layout: 
+    sequence: 10
+    region: Breadcrumb # 38748755514447576235
+    slot: NEXT
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Text with Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--noUI
+    - t-Button--iconLeft
+    icon: fa-undo
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:6:&SESSION.::&DEBUG.:6,RIR::'
+      page: 6 # Stores Report  - Content Row
+      clear-cache: 6,RIR
+
+    warn-on-unsaved-changes: Do Not Check
+
+- # ====== Button: up ==========================================
+  id: 38998329210129648977
+  identification: 
+    button-name: up
+    label: Up
+
+  layout: 
+    sequence: 10
+    region: Breadcrumb # 38748755514447576235
+    slot: UP
+    start-new-layout: false
+    start-new-row: true
+    column: Automatic
+    new-column: true
+    column-span: Automatic
+
+  appearance: 
+    button-template: Icon
+    hot: false
+    template-options: 
+    - '#DEFAULT#'
+    - t-Button--noUI
+    icon: fa-arrow-up
+
+  behavior: 
+    action: Redirect to Page in this Application
+    target: 
+      url: 'f?p=&APP_ID.:1:&SESSION.::&DEBUG.:::'
+      page: 1 # Home
+
+    warn-on-unsaved-changes: Do Not Check
+
+computations: 
+- # ====== Computation: LAST_VIEW ==============================
+  id: 36815713205401808585
+  identification: 
+    item-name: LAST_VIEW
+
+  execution: 
+    sequence: 10
+    point: Before Header
+
+  computation: 
+    type: Static Value
+    static-value: '&APP_PAGE_ID.'
+

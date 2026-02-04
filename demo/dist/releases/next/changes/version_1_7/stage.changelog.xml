@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+<include file="demo1/sequences/oow_demo_seq.sql" relativeToChangelogFile="true"/>
+<include file="demo1/package_specs/oow_demo_event_pkg.sql" relativeToChangelogFile="true"/>
+<include file="demo1/package_specs/oow_demo_gen_data_pkg.sql" relativeToChangelogFile="true"/>
+<include file="demo1/package_specs/oow_demo_sample_data.sql" relativeToChangelogFile="true"/>
+<include file="demo1/package_specs/oow_demo_timing.sql" relativeToChangelogFile="true"/>
+<include file="demo1/package_specs/pk_store_data.sql" relativeToChangelogFile="true"/>
+<include file="demo1/tables/oow_demo_event_log.sql" relativeToChangelogFile="true"/>
+<include file="demo1/tables/oow_demo_hist_gen_log.sql" relativeToChangelogFile="true"/>
+<include file="demo1/tables/oow_demo_items.sql" relativeToChangelogFile="true"/>
+<include file="demo1/tables/oow_demo_preferences.sql" relativeToChangelogFile="true"/>
+<include file="demo1/tables/oow_demo_regions.sql" relativeToChangelogFile="true"/>
+<include file="demo1/tables/oow_demo_sales_history.sql" relativeToChangelogFile="true"/>
+<include file="demo1/tables/oow_demo_stores.sql" relativeToChangelogFile="true"/>
+<include file="demo1/tables/oow_demo_store_products.sql" relativeToChangelogFile="true"/>
+<include file="demo1/package_bodies/oow_demo_event_pkg.sql" relativeToChangelogFile="true"/>
+<include file="demo1/package_bodies/oow_demo_gen_data_pkg.sql" relativeToChangelogFile="true"/>
+<include file="demo1/package_bodies/oow_demo_sample_data.sql" relativeToChangelogFile="true"/>
+<include file="demo1/package_bodies/oow_demo_timing.sql" relativeToChangelogFile="true"/>
+<include file="demo1/package_bodies/pk_store_data.sql" relativeToChangelogFile="true"/>
+<include file="demo1/triggers/biu_oow_demo_event_log.sql" relativeToChangelogFile="true"/>
+<include file="demo1/triggers/biu_oow_demo_items.sql" relativeToChangelogFile="true"/>
+<include file="demo1/triggers/biu_oow_demo_regions.sql" relativeToChangelogFile="true"/>
+<include file="demo1/triggers/biu_oow_demo_sales_hist.sql" relativeToChangelogFile="true"/>
+<include file="demo1/triggers/biu_oow_demo_stores.sql" relativeToChangelogFile="true"/>
+<include file="demo1/triggers/biu_oow_demo_store_products.sql" relativeToChangelogFile="true"/>
+<include file="demo1/triggers/bi_oow_demo_hist_gen_log.sql" relativeToChangelogFile="true"/>
+<include file="demo1/triggers/oow_demo_preferences_biu.sql" relativeToChangelogFile="true"/>
+<include file="demo1/tables/stores.sql" relativeToChangelogFile="true"/>
+<include file="demo1/indexes/oow_demo_preferences_uk.sql" relativeToChangelogFile="true"/>
+<include file="demo1/indexes/oow_demo_sales_history_i1.sql" relativeToChangelogFile="true"/>
+<include file="demo1/indexes/oow_demo_sales_history_i2.sql" relativeToChangelogFile="true"/>
+<include file="demo1/indexes/oow_demo_store_products_i1.sql" relativeToChangelogFile="true"/>
+<include file="demo1/indexes/oow_demo_store_products_i2.sql" relativeToChangelogFile="true"/>
+<include file="demo1/ref_constraints/oow_demo_sales_history_fk1.sql" relativeToChangelogFile="true"/>
+<include file="demo1/ref_constraints/oow_demo_sales_history_fk2.sql" relativeToChangelogFile="true"/>
+<include file="demo1/ref_constraints/oow_demo_store_products_fk1.sql" relativeToChangelogFile="true"/>
+<include file="demo1/ref_constraints/oow_demo_store_products_fk2.sql" relativeToChangelogFile="true"/>
+<include file="demo1/object_grants/object_grants_as_grantor.demo1.table.stores.sql" relativeToChangelogFile="true"/>
+</databaseChangeLog>

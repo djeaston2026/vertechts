@@ -1,0 +1,209 @@
+---
+- # ====== Install Script: oow_demo_timing body ================
+  id: 13905670065056151310
+  identification: 
+    name: oow_demo_timing body
+
+  execution: 
+    sequence: 230
+
+- # ====== Install Script: Add SALES_DATA column to OOW_DEMO_SAL
+  id: 15032034970423982177
+  identification: 
+    name: Add SALES_DATA column to OOW_DEMO_SALES_HISTORY table
+
+  execution: 
+    sequence: 240
+
+  server-side-condition: 
+    type: No Rows returned
+    sql-query: select null from all_tab_columns where table_name = 'OOW_DEMO_SALES_HISTORY' and column_name = 'SALES_DATA';
+
+- # ====== Install Script: Create BIU_OOW_DEMO_SALES_HIST trigge
+  id: 15032035510113004133
+  identification: 
+    name: Create BIU_OOW_DEMO_SALES_HIST trigger
+
+  execution: 
+    sequence: 250
+
+  server-side-condition: 
+    type: No Rows returned
+    sql-query: select null from all_triggers where trigger_name = 'BIU_OOW_DEMO_SALES_HIST';
+
+- # ====== Install Script: Preferences =========================
+  id: 36665157899921107261
+  identification: 
+    name: Preferences
+
+  execution: 
+    sequence: 60
+
+- # ====== Install Script: alter statements ====================
+  id: 38752442123531878203
+  identification: 
+    name: alter statements
+
+  execution: 
+    sequence: 120
+
+- # ====== Install Script: create indexes ======================
+  id: 38752480529958237767
+  identification: 
+    name: create indexes
+
+  execution: 
+    sequence: 130
+
+- # ====== Install Script: items ===============================
+  id: 38752497419494029510
+  identification: 
+    name: items
+
+  execution: 
+    sequence: 70
+
+- # ====== Install Script: regions =============================
+  id: 38752497728498032153
+  identification: 
+    name: regions
+
+  execution: 
+    sequence: 80
+
+- # ====== Install Script: stores ==============================
+  id: 38752498003002034211
+  identification: 
+    name: stores
+
+  execution: 
+    sequence: 90
+
+- # ====== Install Script: history =============================
+  id: 38752498321010039438
+  identification: 
+    name: history
+
+  execution: 
+    sequence: 100
+
+- # ====== Install Script: products ============================
+  id: 38752498630360042094
+  identification: 
+    name: products
+
+  execution: 
+    sequence: 110
+
+- # ====== Install Script: oow_demo_sample_data SPEC ===========
+  id: 38752507426495004702
+  identification: 
+    name: oow_demo_sample_data SPEC
+
+  execution: 
+    sequence: 150
+
+- # ====== Install Script: History Generation Process table ====
+  id: 38753000899768692636
+  identification: 
+    name: History Generation Process table
+
+  execution: 
+    sequence: 140
+
+- # ====== Install Script: Load Sample Data ====================
+  id: 38753504330625054594
+  identification: 
+    name: Load Sample Data
+
+  execution: 
+    sequence: 190
+
+- # ====== Install Script: oow_demo_gen_data_pkg SPEC ==========
+  id: 38767843230819259072
+  identification: 
+    name: oow_demo_gen_data_pkg SPEC
+
+  execution: 
+    sequence: 170
+
+- # ====== Install Script: seed sample history data ============
+  id: 38768486809187184725
+  identification: 
+    name: seed sample history data
+
+  execution: 
+    sequence: 200
+
+- # ====== Install Script: event log ===========================
+  id: 38770894300282312351
+  identification: 
+    name: event log
+
+  execution: 
+    sequence: 30
+
+- # ====== Install Script: scope ===============================
+  id: 38770894630757321150
+  identification: 
+    name: scope
+
+  execution: 
+    sequence: 10
+
+- # ====== Install Script: sequence ============================
+  id: 38770895129849330379
+  identification: 
+    name: sequence
+
+  execution: 
+    sequence: 20
+
+- # ====== Install Script: event pkg ===========================
+  id: 38770895403361360513
+  identification: 
+    name: event pkg
+
+  execution: 
+    sequence: 40
+
+- # ====== Install Script: start ===============================
+  id: 38771089914667430059
+  identification: 
+    name: start
+
+  execution: 
+    sequence: 50
+
+- # ====== Install Script: summary =============================
+  id: 38771490699785501503
+  identification: 
+    name: summary
+
+  execution: 
+    sequence: 210
+
+- # ====== Install Script: oow_demo_timing spec  ===============
+  id: 40188765268464537497
+  identification: 
+    name: 'oow_demo_timing spec '
+
+  execution: 
+    sequence: 220
+
+- # ====== Install Script: oow_demo_sample_data BODY ===========
+  id: 40219527622887515908
+  identification: 
+    name: oow_demo_sample_data BODY
+
+  execution: 
+    sequence: 160
+
+- # ====== Install Script: oow_demo_gen_data_pkg BODY ==========
+  id: 40219811573553615977
+  identification: 
+    name: oow_demo_gen_data_pkg BODY
+
+  execution: 
+    sequence: 180
+

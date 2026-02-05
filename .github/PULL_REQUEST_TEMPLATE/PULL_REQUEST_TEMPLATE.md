@@ -4,7 +4,7 @@
 
 ## Summary of Changes
 
-Adding the PULL_REQUEST_TEMPLATE.md file.
+Adding the PULL_REQUEST_TEMPLATE.md file to repo.
 
 <details>
     <summary><h2 style="display:inline-block;margin: 0;">Peer Review Checklist      </summary>

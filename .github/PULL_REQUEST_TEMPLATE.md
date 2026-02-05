@@ -18,12 +18,68 @@ Adding the PULL_REQUEST_TEMPLATE.md file.
 - [ ] New Presentation Layer
 
 Name of New Galaxy Item(s) listed out:
+> - GALAXY1
+> - GALAXY2
+
+Name of tables/MV where additional columns applied or updated:
 > - TABLE1
 > - TABLE2
-> - PACKAGE1
+> - MV1
 
-<details>
-<summary>Tips for collapsed sections</summary>
-View this text 
+If relevant - App Number and page number:
+> - App 100, Page 5
+> - App 110, Page 3,4
 
-</details>
+Is the new table/M in the right Galaxy table []
+
+Baseline Runtime for new code/code change:
+> - Example1
+
+#### Reports
+
+- [] New Report Build
+- [] Additional Report Functionality
+- [] Removal of Report Functionality
+
+#### Bug Fix
+- [] Resolved
+
+#### Overnight Job
+- [] Does this change require an addition to the overnight job?
+
+If so please apply code runtime:
+> - Code1
+
+## Peer Review Details
+Check the relevant sentence/s.
+
+In the case of ammendments to a report or dashboard, I can confirm that the work was carried out on the most recent version of the report or dashboard and that a check was carried out to ensure that no one else is working on the same app no, by using the version control release document.
+
+[]
+
+In the case of a Galaxy task, I confirm that all the changes have been progressed from Dev to UAT prior to going to PROD and that GAMA has been updated accordingly ans status is at sent for SIT. 
+
+[]
+
+In the case of a Report task, I confirm that all changes have been progressed from Dev to UAT prior to going to PROD.
+
+[]
+
+If the change was a bug fix, I can confirm that the fix resolves the issue raised.
+
+[]
+
+I have checked and confirm that the code meets our coding standards.
+
+[]
+
+If there is a new table, is the table used within an APEX report.
+
+[]
+
+I can confirm that the relevant ticket(s) have been updated to show peer review has taken place.
+
+[]
+
+#### Peer Reviewer Name
+> .

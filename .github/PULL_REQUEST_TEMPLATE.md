@@ -1,39 +1,87 @@
-# Description
+## JIRA Ticket
 
-Please include a summary of the changes and the related issue. Please also include relevant motivation and context. List any dependencies that are required for this change.
+## Release
 
-Fixes # (issue)
+## Summary of Changes
 
-## Type of change
+Adding the PULL_REQUEST_TEMPLATE.md file.
 
-Please delete options that are not relevant.
+## Peer Review Checklist
 
-- [ ] Bug fix (non-breaking change which fixes an issue)
-- [ ] New feature (non-breaking change which adds functionality)
-- [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
-- [ ] This change requires a documentation update
+### Task Type
 
-# How Has This Been Tested?
+- [ ] New Foundation Table
+- [ ] New Fact
+- [ ] New Dimension
+- [ ] Additional Column/s
+- [ ] New Functional Layer
+- [ ] New Presentation Layer
 
-Please describe the tests that you ran to verify your changes. Provide instructions so we can reproduce. Please also list any relevant details for your test configuration
+Name of New Galaxy Item(s) listed out:
+> - GALAXY1
+> - GALAXY2
 
-- [ ] Test A
-- [ ] Test B
+Name of tables/MV where additional columns applied or updated:
+> - TABLE1
+> - TABLE2
+> - MV1
 
-**Test Configuration**:
-* Firmware version:
-* Hardware:
-* Toolchain:
-* SDK:
+If relevant - App Number and page number:
+> - App 100, Page 5
+> - App 110, Page 3,4
 
-# Checklist:
+Is the new table/s in the right Galaxy table
 
-- [ ] My code follows the style guidelines of this project
-- [ ] I have performed a self-review of my code
-- [ ] I have commented my code, particularly in hard-to-understand areas
-- [ ] I have made corresponding changes to the documentation
-- [ ] My changes generate no new warnings
-- [ ] I have added tests that prove my fix is effective or that my feature works
-- [ ] New and existing unit tests pass locally with my changes
-- [ ] Any dependent changes have been merged and published in downstream modules
+- [ ] Yes
 
+Baseline Runtime for new code/code change:
+> - Example1
+
+#### Reports
+
+- [ ] New Report Build
+- [ ] Additional Report Functionality
+- [ ] Removal of Report Functionality
+
+#### Bug Fix
+- [ ] Resolved
+
+#### Overnight Job
+- [ ] Does this change require an addition to the overnight job?
+
+If so please apply code runtime:
+> - Code1
+
+## Peer Review Details
+Check the relevant sentence/s.
+
+In the case of ammendments to a report or dashboard, I can confirm that the work was carried out on the most recent version of the report or dashboard and that a check was carried out to ensure that no one else is working on the same app no, by using the version control release document.
+
+- [ ] Yes [ ] No
+
+In the case of a Galaxy task, I confirm that all the changes have been progressed from Dev to UAT prior to going to PROD and that GAMA has been updated accordingly ans status is at sent for SIT. 
+
+- [ ] Yes
+
+In the case of a Report task, I confirm that all changes have been progressed from Dev to UAT prior to going to PROD.
+
+- [ ] Yes
+
+If the change was a bug fix, I can confirm that the fix resolves the issue raised.
+
+- [ ] Yes
+
+I have checked and confirm that the code meets our coding standards.
+
+- [ ] Yes
+
+If there is a new table, is the table used within an APEX report.
+
+- [ ] Yes
+
+I can confirm that the relevant ticket(s) have been updated to show peer review has taken place.
+
+- [ ] Yes
+
+#### Peer Reviewer Name
+> .

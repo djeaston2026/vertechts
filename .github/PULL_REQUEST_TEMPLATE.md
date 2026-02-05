@@ -1,12 +1,18 @@
 ## JIRA Ticket
 
-## Release
+- 🎫 JIRA-123 — Short description
+- 🎫 JIRA-456 — Short description
+- 🎫 BI-123
 
-## Summary of Changes
+##  Release
+
+🚀 Release BI-REL_1_1
+
+## 📋 Summary of Changes
 
 Adding the PULL_REQUEST_TEMPLATE.md file.
 
-## Peer Review Checklist
+## ✅ Peer Review Checklist
 
 ### Task Type
 
@@ -52,7 +58,7 @@ Baseline Runtime for new code/code change:
 If so please apply code runtime:
 > - Code1
 
-## Peer Review Details
+## 👷 Peer Review Details
 > [!IMPORTANT] Check the relevant sentence/s.
 
 In the case of ammendments to a report or dashboard, I can confirm that the work was carried out on the most recent version of the report or dashboard and that a check was carried out to ensure that no one else is working on the same app no, by using the version control release document.
@@ -82,6 +88,3 @@ If there is a new table, is the table used within an APEX report.
 I can confirm that the relevant ticket(s) have been updated to show peer review has taken place.
 
 - [ ] Yes
-
-#### Peer Reviewer Name
-> .

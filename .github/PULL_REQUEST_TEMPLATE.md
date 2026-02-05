@@ -32,7 +32,7 @@ If relevant - App Number and page number:
 
 Is the new table/s in the right Galaxy table
 
-- [ ]
+- [ ] Yes
 
 Baseline Runtime for new code/code change:
 > - Example1
@@ -57,31 +57,31 @@ Check the relevant sentence/s.
 
 In the case of ammendments to a report or dashboard, I can confirm that the work was carried out on the most recent version of the report or dashboard and that a check was carried out to ensure that no one else is working on the same app no, by using the version control release document.
 
-- [ ] Yes
+- [ ] Yes [ ] No
 
 In the case of a Galaxy task, I confirm that all the changes have been progressed from Dev to UAT prior to going to PROD and that GAMA has been updated accordingly ans status is at sent for SIT. 
 
-- [ ]
+- [ ] Yes
 
 In the case of a Report task, I confirm that all changes have been progressed from Dev to UAT prior to going to PROD.
 
-- [ ]
+- [ ] Yes
 
 If the change was a bug fix, I can confirm that the fix resolves the issue raised.
 
-- [ ]
+- [ ] Yes
 
 I have checked and confirm that the code meets our coding standards.
 
-- [ ]
+- [ ] Yes
 
 If there is a new table, is the table used within an APEX report.
 
-- [ ]
+- [ ] Yes
 
 I can confirm that the relevant ticket(s) have been updated to show peer review has taken place.
 
-- [ ]
+- [ ] Yes
 
 #### Peer Reviewer Name
 > .

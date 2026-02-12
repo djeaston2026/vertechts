@@ -1,0 +1,33 @@
+-- liquibase formatted sql
+-- changeset DEMO1:1770123140720 stripComments:false  logicalFilePath:version_1_7/demo1/package_specs/oow_demo_gen_data_pkg.sql
+-- sqlcl_snapshot demo/src/database/demo1/package_specs/oow_demo_gen_data_pkg.sql:null:a8455e0b6b4f234666cc0fb34e372a6c8c4c1bf0:create
+
+create or replace package demo1.oow_demo_gen_data_pkg is
+    g_i number := null;
+    g_store_count integer := null;
+    g_transaction varchar2(255) := null;
+    g_item_id number := null;
+    g_qty number := null;
+    g_price number := null;
+    g_progress number := 0;
+    g_context varchar2(4000) := null;
+    g_insert_count integer := 0;
+    function generate_transaction return number;
+
+    procedure oow_demo_gen_sales_data (
+        p_days       in number default 90, -- 365
+        p_orders     in number default 50, -- 50
+        p_truncate   in varchar2 default 'Y',
+        p_max_stores in number default 500,
+        p_max_rows   in number default 0
+    );
+
+    procedure exec_100_transactions;
+
+    procedure exec_n_transactions (
+        p_transactions in number default 1
+    );
+
+end;
+/
+

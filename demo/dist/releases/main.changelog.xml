@@ -9,5 +9,6 @@
 <include file="1.4/release.changelog.xml" relativeToChangelogFile="true"/>
 <include file="1.5/release.changelog.xml" relativeToChangelogFile="true"/>
 <include file="apex/apex.changelog.xml" relativeToChangelogFile="true"/>
+<include file="bi123_1/release.changelog.xml" relativeToChangelogFile="true"/>
 <include file="next/release.changelog.xml" relativeToChangelogFile="true"/>
 </databaseChangeLog>

@@ -2,7 +2,7 @@
 
 - 🎫 JIRA-123 — Short description
 - 🎫 JIRA-456 — Short description
-- 🎫 BI-123
+- 🎫 [ BI-123 ](https://www.google.com/123)
 
 ##  Release
 

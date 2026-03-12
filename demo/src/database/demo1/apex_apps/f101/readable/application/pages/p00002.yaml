@@ -4,7 +4,7 @@ id: 2
 identification: 
   name: page2
   alias: PAGE2
-  title: page2
+  title: Change to Page2 Title
 
 appearance: 
   page-mode: Normal

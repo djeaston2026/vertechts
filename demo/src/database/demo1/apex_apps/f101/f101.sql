@@ -20,7 +20,7 @@ begin
 wwv_flow_imp.import_begin (
  p_version_yyyy_mm_dd=>'2024.11.30'
 ,p_release=>'24.2.14'
-,p_default_workspace_id=>8582429969464874
+,p_default_workspace_id=>9444077214391175
 ,p_default_application_id=>101
 ,p_default_id_offset=>0
 ,p_default_owner=>'DEMO1'
@@ -63,7 +63,7 @@ prompt APPLICATION 101 - MyDemo
 --       E-Mail:
 --     Supporting Objects:  Excluded
 --   Version:         24.2.14
---   Instance ID:     8582249361416022
+--   Instance ID:     8643316862282577
 --
 
 prompt --application/delete_application
@@ -109,7 +109,7 @@ wwv_imp_workspace.create_flow(
 ,p_substitution_value_01=>'MyDemo'
 ,p_file_prefix => nvl(wwv_flow_application_install.get_static_app_file_prefix,'')
 ,p_files_version=>6
-,p_version_scn=>46196298690943
+,p_version_scn=>46479432452070
 ,p_print_server_type=>'NATIVE'
 ,p_file_storage=>'DB'
 ,p_is_pwa=>'Y'
@@ -1169,7 +1169,7 @@ wwv_flow_imp_page.create_page(
  p_id=>2
 ,p_name=>'page2'
 ,p_alias=>'PAGE2'
-,p_step_title=>'page2'
+,p_step_title=>'Change to Page2 Title'
 ,p_autocomplete_on_off=>'OFF'
 ,p_javascript_code=>wwv_flow_string.join(wwv_flow_t_varchar2(
 'function populateShuttle(filter,shuttleName)',
@@ -1899,4 +1899,4 @@ prompt  ...done
 
 
 
--- sqlcl_snapshot {"hash":"08b245c7f7e32e4310be9106302f4190f9d0ad85","type":"APEX_APPLICATIONS","name":"f101","schemaName":"DEMO1","sxml":""}
+-- sqlcl_snapshot {"hash":"1ca4e464ec6031b50d0afd1a2c8ca655ccdfd7d7","type":"APEX_APPLICATIONS","name":"f101","schemaName":"DEMO1","sxml":""}

@@ -25,7 +25,7 @@ whenever sqlerror exit sql.sqlcode rollback
 begin
 wwv_flow_imp.import_begin (
  p_version_yyyy_mm_dd=>'2024.11.30'
-,p_release=>'24.2.13'
+,p_release=>'24.2.14'
 ,p_default_workspace_id=>9444077214391175
 ,p_default_application_id=>100
 ,p_default_id_offset=>9447295217451572
@@ -74,7 +74,7 @@ prompt APPLICATION 100 - Brookstrut Sample App
 --       Reports:
 --       E-Mail:
 --     Supporting Objects:  Excluded
---   Version:         24.2.13
+--   Version:         24.2.14
 --   Instance ID:     8643316862282577
 --
 
@@ -22580,4 +22580,4 @@ prompt  ...done
 
 
 
--- sqlcl_snapshot {"hash":"c3000374e837f3a9e21bb3c3ed97f13ffcf32773","type":"APEX_APPLICATIONS","name":"f100","schemaName":"DEMO1","sxml":""}
+-- sqlcl_snapshot {"hash":"d69a40cd6ce816145cd591343e67f068c93cf7d9","type":"APEX_APPLICATIONS","name":"f100","schemaName":"DEMO1","sxml":""}

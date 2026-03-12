@@ -9,7 +9,7 @@
     <n0:runApexScript objectName="install" objectType="SCRIPT" ownerName="DEMO1" sourceType="STRING"  relativeToChangelogFile="true" >
         <n0:source><![CDATA[
  declare 
- -- sqlcl version      = 25.4.1.0 
+ -- sqlcl version      = 25.4.2.0 
  -- override_schema    = ${apex.100.schema}
  -- override_alias     = ${apex.100.alias}
  -- override_workspace = ${apex.100.workspace}
@@ -65,7 +65,7 @@
  end if;
 end;  
 /
--- sqlcl_checksum  1770123147280
+-- sqlcl_checksum  1773310016585
 @f100.sql
         ]]></n0:source>
     </n0:runApexScript>
